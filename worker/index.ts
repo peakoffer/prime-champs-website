@@ -40,7 +40,36 @@ const worker = {
       }, allowedWidths);
     }
 
-    return handler.fetch(request, env, ctx);
+    const response = await handler.fetch(request, env, ctx);
+    const contentType = response.headers.get("content-type") ?? "";
+
+    if (!contentType.includes("text/html")) return response;
+
+    const headers = new Headers(response.headers);
+    headers.set("Content-Security-Policy", [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'none'",
+      "form-action 'self' mailto:",
+      "img-src 'self' data: blob:",
+      "font-src 'self' data:",
+      "style-src 'self' 'unsafe-inline'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "connect-src 'self' https://rmxuwyxpoazsuqvdadlo.supabase.co",
+      "upgrade-insecure-requests",
+    ].join("; "));
+    headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
+    headers.set("X-Content-Type-Options", "nosniff");
+    headers.set("X-Frame-Options", "DENY");
+    headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
+    headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
   },
 };
 

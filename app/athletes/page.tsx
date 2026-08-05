@@ -1,5 +1,14 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowLink, PageShell } from "../components/SiteShell";
+import { pageMetadata } from "../seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Athlete Representation & Partnership Support",
+  description:
+    "Commercial positioning, brand introductions, negotiation, and partnership management for professional, collegiate, emerging, and creator-athletes.",
+  path: "/athletes",
+  keywords: ["athlete representation", "athlete sponsorship agency", "sports agent partnerships", "brand deals for athletes"],
+});
 
 const representationSteps = [
   ["01", "Review", "We look at your sport, momentum, story, audience, goals, and existing commercial position."],
@@ -10,7 +19,7 @@ const representationSteps = [
 
 export default function AthletesPage() {
   return (
-    <PageShell>
+    <PageShell currentPath="/athletes">
       <section className="subpage-hero athlete-page-hero">
         <div className="subpage-hero-copy">
           <p className="eyebrow">Representation for modern athletes</p>
@@ -20,14 +29,19 @@ export default function AthletesPage() {
             meet aligned partners, negotiate clearly, and build relationships
             that can grow with the career.
           </p>
-          <Link className="button-primary" href="/apply?type=athlete">
+          <a className="button-primary" href="/apply?type=athlete">
             Apply for representation ↗
-          </Link>
+          </a>
         </div>
         <div className="subpage-hero-image">
-          <img src="/media/fight-training.jpg" alt="Combat athlete training with a coach" />
+          <img src="/media/fight-training.jpg" alt="Combat athlete training with a coach" width="1260" height="1549" fetchPriority="high" />
           <div className="image-data-label"><span>FOCUS</span><strong>Career × commercial</strong></div>
         </div>
+      </section>
+
+      <section className="transparency-band">
+        <p><strong>Our standard:</strong> Applying starts a review; it does not guarantee representation, sponsorship, or income.</p>
+        <ArrowLink href="/approach">See exactly how fit is assessed</ArrowLink>
       </section>
 
       <section className="outcomes-section section-pad">
@@ -72,7 +86,7 @@ export default function AthletesPage() {
 
       <section className="sports-section section-pad">
         <div className="sports-image">
-          <img src="/media/surf-aerial.jpg" alt="Surfer performing an aerial maneuver" />
+          <img src="/media/surf-aerial.jpg" alt="Surfer performing an aerial maneuver" width="1260" height="2037" loading="lazy" decoding="async" />
         </div>
         <div className="sports-copy">
           <p className="eyebrow dark">Who we work with</p>

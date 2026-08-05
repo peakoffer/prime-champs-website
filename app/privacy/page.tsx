@@ -1,8 +1,17 @@
+import type { Metadata } from "next";
 import { PageShell } from "../components/SiteShell";
+import { pageMetadata } from "../seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Privacy Policy",
+  description: "How Prime Champs and VisionWave Agency LLC collect, use, retain, and protect website inquiry information.",
+  path: "/privacy",
+  keywords: ["Prime Champs privacy policy"],
+});
 
 export default function PrivacyPage() {
   return (
-    <PageShell>
+    <PageShell currentPath="/privacy">
       <article className="legal-page">
         <p className="eyebrow dark">Last updated August 5, 2026</p>
         <h1>Privacy policy</h1>

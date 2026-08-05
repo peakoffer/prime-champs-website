@@ -1,5 +1,14 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowLink, PageShell } from "./components/SiteShell";
+import { pageMetadata } from "./seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Athlete Partnerships & Brand Campaigns",
+  description:
+    "Prime Champs builds credible athlete partnerships through focused scouting, commercial positioning, negotiation, and campaign support.",
+  path: "/",
+  keywords: ["athlete partnerships", "sports marketing agency", "athlete representation", "brand sponsorships"],
+});
 
 const services = [
   {
@@ -44,7 +53,7 @@ const process = [
 
 export default function Home() {
   return (
-    <PageShell>
+    <PageShell currentPath="/">
       <section className="home-hero">
         <div className="hero-copy">
           <p className="eyebrow">Athlete partnerships / brand campaigns</p>
@@ -58,22 +67,22 @@ export default function Home() {
             worth repeating.
           </p>
           <div className="button-row">
-            <Link className="button-primary" href="/athletes">
+            <a className="button-primary" href="/athletes">
               I&apos;m an athlete <span aria-hidden="true">↗</span>
-            </Link>
-            <Link className="button-secondary" href="/brands">
+            </a>
+            <a className="button-secondary" href="/brands">
               I represent a brand <span aria-hidden="true">↗</span>
-            </Link>
+            </a>
           </div>
         </div>
 
         <div className="hero-visual" aria-label="Prime Champs sports portfolio">
           <div className="hero-frame main-frame">
-            <img src="/media/fight-training.jpg" alt="Combat athlete training in a gym" />
+            <img src="/media/fight-training.jpg" alt="Combat athlete training in a gym" width="1260" height="1549" fetchPriority="high" />
             <span>Combat / campaign ready</span>
           </div>
           <div className="hero-frame accent-frame">
-            <img src="/media/surf-aerial.jpg" alt="Surfer launching above a wave" />
+            <img src="/media/surf-aerial.jpg" alt="Surfer launching above a wave" width="1260" height="2037" fetchPriority="high" />
             <span>Surf / global culture</span>
           </div>
           <img
@@ -82,6 +91,7 @@ export default function Home() {
             alt=""
             width="170"
             height="170"
+            decoding="async"
           />
         </div>
 
@@ -158,6 +168,24 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="proof-section section-pad" aria-labelledby="proof-heading">
+        <div className="proof-intro">
+          <p className="eyebrow dark">The proof ledger</p>
+          <h2 id="proof-heading">Show the work. Label the claim.</h2>
+          <p>
+            Prime Champs maintains an internal scouting and qualification system
+            built to make athlete–brand fit more deliberate. These numbers describe
+            research coverage—not a public client roster or guaranteed outcome.
+          </p>
+          <ArrowLink href="/approach">Review our qualification standard</ArrowLink>
+        </div>
+        <div className="proof-ledger">
+          <article><span>300+</span><strong>Athlete profiles researched</strong><p>Structured internal scouting records reviewed across performance, audience, story, and commercial signals.</p></article>
+          <article><span>8+</span><strong>Sport categories covered</strong><p>Combat, motorsport, surf, athletics, volleyball, hockey, ball sports, action sports, and adjacent fields.</p></article>
+          <article><span>5</span><strong>Fit dimensions screened</strong><p>Credibility, audience, professionalism, rights readiness, and commercial alignment.</p></article>
+        </div>
+      </section>
+
       <section className="culture-section section-pad">
         <div className="culture-copy">
           <p className="eyebrow dark">Built in sports culture</p>
@@ -171,15 +199,15 @@ export default function Home() {
         </div>
         <div className="culture-grid">
           <figure className="culture-image culture-wide">
-            <img src="/media/fight-night.jpg" alt="Athletes competing in a combat sports arena" />
+            <img src="/media/fight-night.jpg" alt="Athletes competing in a combat sports arena" width="1260" height="914" loading="lazy" decoding="async" />
             <figcaption>COMBAT / LIVE MOMENT</figcaption>
           </figure>
           <figure className="culture-image culture-tall">
-            <img src="/media/surf-carve.jpg" alt="Surfer carving through a wave" />
+            <img src="/media/surf-carve.jpg" alt="Surfer carving through a wave" width="1260" height="1974" loading="lazy" decoding="async" />
             <figcaption>SURF / CULTURE</figcaption>
           </figure>
           <figure className="culture-image culture-small">
-            <img src="/media/tennis-campaign.jpg" alt="Prime Champs campaign concept on a tennis ball" />
+            <img src="/media/tennis-campaign.jpg" alt="Prime Champs campaign concept on a tennis ball" width="825" height="1024" loading="lazy" decoding="async" />
             <figcaption>CAMPAIGN / DETAIL</figcaption>
           </figure>
         </div>

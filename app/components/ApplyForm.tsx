@@ -5,12 +5,12 @@ import { FormEvent, useRef, useState } from "react";
 type LeadType = "athlete" | "brand";
 
 const SUPABASE_FUNCTION_URL =
-  "https://kfjzwbopdssfvyiyofws.supabase.co/functions/v1/validate-lead";
+  "https://rmxuwyxpoazsuqvdadlo.supabase.co/functions/v1/website-intake";
 
-// This is the same legacy public anon key used by the current Prime Champs
-// frontend. Authorization and validation remain inside the Edge Function.
+// Publishable keys are designed for browser clients. The Edge Function applies
+// origin checks, validation, abuse controls, and performs the privileged insert.
 const SUPABASE_PUBLIC_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtmanp3Ym9wZHNzZnZ5aXlvZndzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkzNDA3MDUsImV4cCI6MjA3NDkxNjcwNX0.fO4DGNJyuB4cb_u_3sN4g2oZAyQx1Pv0jUJX2XqM14c";
+  "sb_publishable_BvB_25z_7HLt3wlp1DUGhw_OLZwhspi";
 
 const athleteFields = new Set([
   "primary_sport",
@@ -70,6 +70,8 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
       full_name: formData.get("full_name") ?? "",
       email: formData.get("email") ?? "",
       phone: formData.get("phone") ?? "",
+      source_url: window.location.href,
+      referrer: document.referrer || null,
     };
 
     const activeFields = leadType === "athlete" ? athleteFields : brandFields;
@@ -81,10 +83,9 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
       const response = await fetch(SUPABASE_FUNCTION_URL, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${SUPABASE_PUBLIC_KEY}`,
           apikey: SUPABASE_PUBLIC_KEY,
           "Content-Type": "application/json",
-          "x-client-info": "prime-champs-sites/1.0",
+          "x-client-info": "prime-champs-sites/2.0",
         },
         body: JSON.stringify(payload),
       });
@@ -133,6 +134,11 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
             ? "Share the essentials. We review sport, story, audience, goals, and commercial readiness—not follower count alone."
             : "Tell us the audience, ambition, timeline, and budget. We’ll come back with a sharper athlete brief and next step."}
         </p>
+        <ul className="form-expectations" aria-label="What happens next">
+          <li>Direct review against current fit and capacity</li>
+          <li>No automatic mailing-list enrollment</li>
+          <li>No representation or campaign guarantee</li>
+        </ul>
       </div>
 
       <div className="application-form-wrap">
@@ -156,7 +162,13 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
         </div>
 
         <form ref={formRef} onSubmit={submitLead}>
-          <input className="honey-field" name="company_fax" tabIndex={-1} autoComplete="off" />
+          <input
+            className="honey-field"
+            name="company_fax"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
 
           <div className="field-grid two">
             <label>
@@ -170,8 +182,8 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
           </div>
 
           <label>
-            Phone <span>*</span>
-            <input name="phone" type="tel" autoComplete="tel" required />
+            Phone <small>Optional</small>
+            <input name="phone" type="tel" autoComplete="tel" />
           </label>
 
           {leadType === "athlete" ? <AthleteFields /> : <BrandFields />}
@@ -256,9 +268,9 @@ function AthleteFields() {
       </div>
 
       <label>
-        Total social following <span>*</span>
-        <select name="social_media_following" required defaultValue="">
-          <option value="" disabled>Select range</option>
+        Total social following <small>Optional</small>
+        <select name="social_media_following" defaultValue="">
+          <option value="">Select range</option>
           <option>Under 10K</option>
           <option>10K–50K</option>
           <option>50K–100K</option>
@@ -269,10 +281,9 @@ function AthleteFields() {
       </label>
 
       <label>
-        Competitive highlights <span>*</span>
+        Competitive highlights <small>Optional</small>
         <textarea
           name="notable_achievements"
-          required
           maxLength={2000}
           placeholder="Titles, events, rankings, records, press, or career moments that matter."
         />
@@ -322,9 +333,9 @@ function BrandFields() {
           <input name="company_website" placeholder="yourbrand.com" inputMode="url" />
         </label>
         <label>
-          Industry <span>*</span>
-          <select name="industry" required defaultValue="">
-            <option value="" disabled>Select industry</option>
+          Industry <small>Optional</small>
+          <select name="industry" defaultValue="">
+            <option value="">Select industry</option>
             <option>Sports and fitness</option>
             <option>Apparel and equipment</option>
             <option>Food and beverage</option>
@@ -339,9 +350,9 @@ function BrandFields() {
 
       <div className="field-grid two">
         <label>
-          Partnership budget <span>*</span>
-          <select name="partnership_budget" required defaultValue="">
-            <option value="" disabled>Select range</option>
+          Partnership budget <small>Optional</small>
+          <select name="partnership_budget" defaultValue="">
+            <option value="">Select range</option>
             <option>Under $10K</option>
             <option>$10K–$25K</option>
             <option>$25K–$50K</option>
@@ -351,9 +362,9 @@ function BrandFields() {
           </select>
         </label>
         <label>
-          Desired start <span>*</span>
-          <select name="partnership_timeline" required defaultValue="">
-            <option value="" disabled>Select timeline</option>
+          Desired start <small>Optional</small>
+          <select name="partnership_timeline" defaultValue="">
+            <option value="">Select timeline</option>
             <option>Within 30 days</option>
             <option>1–3 months</option>
             <option>3–6 months</option>
@@ -382,10 +393,9 @@ function BrandFields() {
         />
       </label>
       <label>
-        Audience <span>*</span>
+        Audience <small>Optional</small>
         <textarea
           name="target_audience"
-          required
           maxLength={2000}
           placeholder="Who needs to believe, care, or act?"
         />

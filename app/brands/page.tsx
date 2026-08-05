@@ -1,5 +1,14 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowLink, PageShell } from "../components/SiteShell";
+import { pageMetadata } from "../seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Athlete Marketing & Brand Partnerships",
+  description:
+    "Prime Champs helps brands define athlete briefs, qualify credible talent, structure partnership terms, and support sports campaign execution.",
+  path: "/brands",
+  keywords: ["athlete marketing agency", "sports influencer campaigns", "brand athlete partnerships", "sports sponsorship campaigns"],
+});
 
 const campaignTypes = [
   ["LAUNCH", "Product and category launches", "Put the product inside a credible performance story, not beside a borrowed audience."],
@@ -10,7 +19,7 @@ const campaignTypes = [
 
 export default function BrandsPage() {
   return (
-    <PageShell>
+    <PageShell currentPath="/brands">
       <section className="subpage-hero brand-page-hero">
         <div className="subpage-hero-copy">
           <p className="eyebrow">Partnerships for ambitious brands</p>
@@ -20,14 +29,19 @@ export default function BrandsPage() {
             match, partnership structure, and activation—with one accountable
             team between brief and delivery.
           </p>
-          <Link className="button-primary" href="/apply?type=brand">
+          <a className="button-primary" href="/apply?type=brand">
             Start a campaign brief ↗
-          </Link>
+          </a>
         </div>
         <div className="subpage-hero-image brand-hero-image">
-          <img src="/media/surf-carve.jpg" alt="Surfer carving across a blue wave" />
+          <img src="/media/surf-carve.jpg" alt="Surfer carving across a blue wave" width="1260" height="1974" fetchPriority="high" />
           <div className="image-data-label"><span>FILTER</span><strong>Credibility × audience</strong></div>
         </div>
+      </section>
+
+      <section className="transparency-band">
+        <p><strong>Research-backed fit:</strong> Our internal system tracks 300+ athlete profiles across 8+ sport categories. Research coverage is not a public roster.</p>
+        <ArrowLink href="/approach">Review the qualification framework</ArrowLink>
       </section>
 
       <section className="campaign-section section-pad">
@@ -52,7 +66,7 @@ export default function BrandsPage() {
 
       <section className="brand-value-section section-pad dark-section">
         <div className="brand-value-image">
-          <img src="/media/cage-control.jpg" alt="View through a combat sports cage before an event" />
+          <img src="/media/cage-control.jpg" alt="View through a combat sports cage before an event" width="1260" height="771" loading="lazy" decoding="async" />
           <span>THE MOMENT BEFORE THE MOMENT</span>
         </div>
         <div className="brand-value-copy">

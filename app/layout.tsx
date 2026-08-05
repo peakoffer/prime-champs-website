@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Barlow_Condensed, IBM_Plex_Mono, Manrope } from "next/font/google";
 import "./globals.css";
+import { productionUrl } from "./seo";
 
 const display = Barlow_Condensed({
   variable: "--font-display",
@@ -36,9 +37,28 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description:
       "Prime Champs connects athletes with brands and platforms, supporting positioning, introductions, negotiation, and campaign growth.",
+    applicationName: "Prime Champs",
+    category: "Sports marketing",
+    creator: "Prime Champs",
+    publisher: "VisionWave Agency LLC",
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
+    manifest: "/site.webmanifest",
     icons: {
-      icon: "/favicon.png",
-      shortcut: "/favicon.png",
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/favicon.png", type: "image/png" },
+      ],
+      shortcut: "/favicon.ico",
       apple: "/favicon.png",
     },
     openGraph: {
@@ -68,9 +88,39 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Prime Champs",
+    legalName: "VisionWave Agency LLC",
+    url: productionUrl,
+    logo: `${productionUrl}/media/prime-champs-mark.png`,
+    description:
+      "Athlete representation, brand partnerships, and sports campaign support.",
+    email: "info@prime-champs.com",
+    sameAs: ["https://www.instagram.com/primechamps"],
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Prime Champs",
+    url: productionUrl,
+    publisher: { "@id": `${productionUrl}/#organization` },
+  };
+
   return (
     <html lang="en">
       <body className={`${display.variable} ${body.variable} ${utility.variable}`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([
+              { ...organizationSchema, "@id": `${productionUrl}/#organization` },
+              websiteSchema,
+            ]).replace(/</g, "\\u003c"),
+          }}
+        />
         {children}
       </body>
     </html>

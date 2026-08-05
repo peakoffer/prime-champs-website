@@ -1,8 +1,17 @@
+import type { Metadata } from "next";
 import { PageShell } from "../components/SiteShell";
+import { pageMetadata } from "../seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "Website Terms",
+  description: "Terms governing use of the Prime Champs website and submission of athlete or brand inquiries.",
+  path: "/terms",
+  keywords: ["Prime Champs terms"],
+});
 
 export default function TermsPage() {
   return (
-    <PageShell>
+    <PageShell currentPath="/terms">
       <article className="legal-page">
         <p className="eyebrow dark">Last updated August 5, 2026</p>
         <h1>Website terms</h1>

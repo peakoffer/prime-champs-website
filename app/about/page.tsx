@@ -1,5 +1,14 @@
-import Link from "next/link";
+import type { Metadata } from "next";
 import { PageShell } from "../components/SiteShell";
+import { pageMetadata } from "../seo";
+
+export const metadata: Metadata = pageMetadata({
+  title: "About the Athlete Partnership Agency",
+  description:
+    "Learn how Prime Champs, a trade name of VisionWave Agency LLC, approaches athlete representation, sports marketing, and brand partnership work.",
+  path: "/about",
+  keywords: ["Prime Champs agency", "VisionWave Agency LLC", "sports marketing company", "athlete partnership agency"],
+});
 
 const principles = [
   ["FIT", "A partnership needs a reason to exist beyond reach."],
@@ -10,7 +19,7 @@ const principles = [
 
 export default function AboutPage() {
   return (
-    <PageShell>
+    <PageShell currentPath="/about">
       <section className="about-hero">
         <div>
           <p className="eyebrow">About Prime Champs</p>
@@ -25,7 +34,7 @@ export default function AboutPage() {
 
       <section className="about-story section-pad">
         <div className="about-story-image">
-          <img src="/media/fight-night.jpg" alt="Two athletes competing in a combat sports match" />
+          <img src="/media/fight-night.jpg" alt="Two athletes competing in a combat sports match" width="1260" height="914" fetchPriority="high" />
         </div>
         <div className="about-story-copy">
           <p className="eyebrow dark">Our role</p>
@@ -80,9 +89,9 @@ export default function AboutPage() {
           </p>
         </div>
         <div className="network-images">
-          <img src="/media/surf-aerial.jpg" alt="Surfer high above a wave" />
-          <img src="/media/fight-training.jpg" alt="Combat athlete training in a gym" />
-          <img src="/media/tennis-campaign.jpg" alt="Prime Champs campaign concept on a tennis ball" />
+          <img src="/media/surf-aerial.jpg" alt="Surfer high above a wave" width="1260" height="2037" loading="lazy" decoding="async" />
+          <img src="/media/fight-training.jpg" alt="Combat athlete training in a gym" width="1260" height="1549" loading="lazy" decoding="async" />
+          <img src="/media/tennis-campaign.jpg" alt="Prime Champs campaign concept on a tennis ball" width="825" height="1024" loading="lazy" decoding="async" />
         </div>
       </section>
 
@@ -91,7 +100,7 @@ export default function AboutPage() {
           <p className="eyebrow dark">Start with context</p>
           <h2>Tell us what you compete for—or what your brand needs to change.</h2>
         </div>
-        <Link className="button-primary dark-button" href="/apply">Start a conversation ↗</Link>
+        <a className="button-primary dark-button" href="/apply">Start a conversation ↗</a>
       </section>
     </PageShell>
   );

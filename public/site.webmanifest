@@ -1,0 +1,12 @@
+{
+  "name": "Prime Champs",
+  "short_name": "Prime Champs",
+  "description": "Athlete partnerships and brand campaigns.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06111f",
+  "theme_color": "#06111f",
+  "icons": [
+    { "src": "/favicon.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

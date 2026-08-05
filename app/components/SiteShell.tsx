@@ -1,47 +1,61 @@
-import Link from "next/link";
-
 const primaryLinks = [
   { href: "/athletes", label: "For athletes" },
   { href: "/brands", label: "For brands" },
+  { href: "/approach", label: "Our approach" },
   { href: "/about", label: "About" },
 ];
 
-export function SiteHeader() {
+export function SiteHeader({ currentPath }: { currentPath?: string }) {
   return (
     <header className="site-header">
-      <Link className="brand-lockup" href="/" aria-label="Prime Champs home">
+      <a className="brand-lockup" href="/" aria-label="Prime Champs home">
         <img
           src="/media/prime-champs-wordmark.png"
           alt="Prime Champs"
           width="152"
           height="83"
+          fetchPriority="high"
         />
-      </Link>
+      </a>
 
       <nav className="desktop-nav" aria-label="Primary navigation">
         {primaryLinks.map((link) => (
-          <Link href={link.href} key={link.href}>
+          <a
+            href={link.href}
+            key={link.href}
+            aria-current={currentPath === link.href ? "page" : undefined}
+          >
             {link.label}
-          </Link>
+          </a>
         ))}
       </nav>
 
-      <Link className="header-cta" href="/apply">
+      <a
+        className="header-cta"
+        href="/apply"
+        aria-current={currentPath === "/apply" ? "page" : undefined}
+      >
         Start a conversation <span aria-hidden="true">↗</span>
-      </Link>
+      </a>
 
       <details className="mobile-nav">
-        <summary aria-label="Open navigation">
+        <summary aria-label="Toggle navigation menu">
           <span>Menu</span>
           <i aria-hidden="true" />
         </summary>
         <nav aria-label="Mobile navigation">
           {primaryLinks.map((link) => (
-            <Link href={link.href} key={link.href}>
+            <a
+              href={link.href}
+              key={link.href}
+              aria-current={currentPath === link.href ? "page" : undefined}
+            >
               {link.label}
-            </Link>
+            </a>
           ))}
-          <Link href="/apply">Start a conversation ↗</Link>
+          <a href="/apply" aria-current={currentPath === "/apply" ? "page" : undefined}>
+            Start a conversation ↗
+          </a>
         </nav>
       </details>
     </header>
@@ -54,9 +68,9 @@ export function SiteFooter() {
       <div className="footer-lead">
         <p className="eyebrow">The next move starts here</p>
         <h2>Build the partnership people remember.</h2>
-        <Link className="text-link light" href="/apply">
+        <a className="text-link light" href="/apply">
           Tell us what you&apos;re building <span aria-hidden="true">↗</span>
-        </Link>
+        </a>
       </div>
 
       <div className="footer-grid">
@@ -66,6 +80,8 @@ export function SiteFooter() {
             alt="Prime Champs"
             width="176"
             height="96"
+            loading="lazy"
+            decoding="async"
           />
           <p>
             Athlete representation, brand partnerships, and campaign support
@@ -75,10 +91,11 @@ export function SiteFooter() {
 
         <div>
           <p className="footer-label">Explore</p>
-          <Link href="/athletes">For athletes</Link>
-          <Link href="/brands">For brands</Link>
-          <Link href="/about">About Prime Champs</Link>
-          <Link href="/apply">Apply or inquire</Link>
+          <a href="/athletes">For athletes</a>
+          <a href="/brands">For brands</a>
+          <a href="/approach">Our approach</a>
+          <a href="/about">About Prime Champs</a>
+          <a href="/apply">Apply or inquire</a>
         </div>
 
         <div>
@@ -95,8 +112,8 @@ export function SiteFooter() {
 
         <div>
           <p className="footer-label">Details</p>
-          <Link href="/privacy">Privacy</Link>
-          <Link href="/terms">Terms</Link>
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
           <p className="legal-identity">
             Prime Champs is a trade name of VisionWave Agency LLC.
           </p>
@@ -111,11 +128,18 @@ export function SiteFooter() {
   );
 }
 
-export function PageShell({ children }: { children: React.ReactNode }) {
+export function PageShell({
+  children,
+  currentPath,
+}: {
+  children: React.ReactNode;
+  currentPath?: string;
+}) {
   return (
     <>
-      <SiteHeader />
-      <main>{children}</main>
+      <a className="skip-link" href="#main-content">Skip to main content</a>
+      <SiteHeader currentPath={currentPath} />
+      <main id="main-content">{children}</main>
       <SiteFooter />
     </>
   );
@@ -131,8 +155,8 @@ export function ArrowLink({
   inverse?: boolean;
 }) {
   return (
-    <Link className={`text-link${inverse ? " light" : ""}`} href={href}>
+    <a className={`text-link${inverse ? " light" : ""}`} href={href}>
       {children} <span aria-hidden="true">↗</span>
-    </Link>
+    </a>
   );
 }

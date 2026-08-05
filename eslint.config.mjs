@@ -13,6 +13,7 @@ const eslintConfig = defineConfig([
     "dist/**",
     "out/**",
     "build/**",
+    "supabase/functions/**",
     "next-env.d.ts",
   ]),
   eslint.configs.recommended,
@@ -23,6 +24,13 @@ const eslintConfig = defineConfig([
   jsxA11y.flatConfigs.recommended,
   next.configs["core-web-vitals"],
   {
+    rules: {
+      // Native anchors intentionally avoid the current vinext next/link runtime
+      // regression; native images use Cloudflare's asset pipeline and explicit
+      // dimensions/loading hints.
+      "@next/next/no-html-link-for-pages": "off",
+      "@next/next/no-img-element": "off",
+    },
     languageOptions: {
       globals: {
         ...globals.browser,
