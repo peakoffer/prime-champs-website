@@ -91,7 +91,7 @@ export default function AboutPage() {
         <div className="network-images">
           <img src="/media/surf-carve-clean.jpg" alt="Surfer driving through a powerful turn" width="1002" height="1570" loading="lazy" decoding="async" />
           <img src="/media/fight-ring.jpg" alt="Combat athlete landing a kick in competition" width="1260" height="1279" loading="lazy" decoding="async" />
-          <img src="/media/tennis-clean.jpg" alt="Tennis ball in play during a match" width="1126" height="1397" loading="lazy" decoding="async" />
+          <img src="/media/tennis-campaign.jpg" alt="Tennis ball with Prime Champs campaign branding" width="825" height="1024" loading="lazy" decoding="async" />
         </div>
       </section>
 

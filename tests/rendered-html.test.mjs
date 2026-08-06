@@ -122,7 +122,8 @@ test("ships the final identity and credibility refinements", async () => {
   assert.doesNotMatch(styles, /\.brand-lockup img[\s\S]*?transform: scale\(2\.85\)/);
   assert.match(home, /fight-ring\.jpg/);
   assert.match(home, /surf-sunset-carve\.jpg/);
-  assert.match(home, /tennis-clean\.jpg/);
+  assert.match(home, /tennis-campaign\.jpg/);
+  assert.doesNotMatch(home, /tennis-clean\.jpg/);
   assert.match(home, />TENNIS</);
   assert.doesNotMatch(home, /surf-wipeout\.jpg/);
   assert.doesNotMatch(shell, /footer-lead/);
