@@ -1,0 +1,15 @@
+.git
+.openai
+.vercel
+.next
+.vinext
+.wrangler
+node_modules
+dist
+outputs
+work
+tmp
+coverage
+tests
+examples
+
