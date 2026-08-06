@@ -24,12 +24,12 @@ const services = [
   {
     code: "PROTECT",
     title: "Negotiation and deal support",
-    copy: "We support terms, deliverables, timelines, and partnership expectations so both sides know what good looks like.",
+    copy: "We support terms, deliverables, timelines, and partnership expectations so both sides know what success looks like.",
   },
   {
     code: "GROW",
-    title: "Campaign and relationship growth",
-    copy: "We help partnerships move beyond a post into repeatable work with more creative range and long-term value.",
+    title: "Partnership growth",
+    copy: "We help partnerships grow beyond a one-time post into repeatable work with greater creative range and long-term value.",
   },
 ];
 
@@ -111,7 +111,8 @@ export default function Home() {
           </div>
           <p>
             Strong campaigns are built where athletic credibility meets a real
-            business objective. Prime Champs is the operating layer in between.
+            business objective. Prime Champs helps both sides turn that fit into
+            a working partnership.
           </p>
         </div>
 
@@ -133,8 +134,8 @@ export default function Home() {
             <p className="lane-number">B / 02</p>
             <h3>For brands</h3>
             <p>
-              Find athletes your audience can believe, shape the partnership,
-              and move from brief to campaign without unnecessary friction.
+              Find athletes your audience can believe in, shape the partnership,
+              and move from brief to campaign with less friction.
             </p>
             <ArrowLink href="/brands">Build a brand partnership</ArrowLink>
             <div className="lane-tags">
@@ -151,8 +152,8 @@ export default function Home() {
             <h2>More than the intro.</h2>
           </div>
           <p>
-            Prime Champs supports the full commercial arc: from opportunity
-            discovery through negotiation and campaign follow-through.
+            Prime Champs supports the commercial process—from opportunity
+            discovery and negotiations through campaign follow-through.
           </p>
         </div>
 
