@@ -6,6 +6,13 @@ const primaryLinks = [
 ];
 
 export function SiteHeader({ currentPath }: { currentPath?: string }) {
+  const headerCta =
+    currentPath === "/brands"
+      ? { href: "/apply?type=brand", label: "Start a brief" }
+      : currentPath === "/athletes" || currentPath === "/"
+        ? { href: "/apply?type=athlete", label: "Apply now" }
+        : { href: "/apply", label: "Apply / inquire" };
+
   return (
     <header className="site-header">
       <a className="brand-lockup" href="/" aria-label="Prime Champs home">
@@ -32,10 +39,10 @@ export function SiteHeader({ currentPath }: { currentPath?: string }) {
 
       <a
         className="header-cta"
-        href="/apply"
+        href={headerCta.href}
         aria-current={currentPath === "/apply" ? "page" : undefined}
       >
-        Apply now <span aria-hidden="true">↗</span>
+        {headerCta.label} <span aria-hidden="true">↗</span>
       </a>
 
       <details className="mobile-nav">
@@ -53,8 +60,8 @@ export function SiteHeader({ currentPath }: { currentPath?: string }) {
               {link.label}
             </a>
           ))}
-          <a href="/apply" aria-current={currentPath === "/apply" ? "page" : undefined}>
-            Apply now ↗
+          <a href={headerCta.href} aria-current={currentPath === "/apply" ? "page" : undefined}>
+            {headerCta.label} ↗
           </a>
         </nav>
       </details>
@@ -65,14 +72,6 @@ export function SiteHeader({ currentPath }: { currentPath?: string }) {
 export function SiteFooter() {
   return (
     <footer className="site-footer">
-      <div className="footer-lead">
-        <p className="eyebrow">The next move starts here</p>
-        <h2>Ready to make your next move?</h2>
-        <a className="text-link light" href="/apply?type=athlete">
-          Apply now <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-
       <div className="footer-grid footer-grid-compact">
         <div className="footer-brand">
           <a className="footer-brand-lockup" href="/" aria-label="Prime Champs home">

@@ -53,8 +53,8 @@ export default function Home() {
         <div className="hero-copy">
           <p className="eyebrow">Brand opportunities for athletes</p>
           <h1>
-            Turn your sport
-            <span>into opportunity.</span>
+            Turn performance
+            <span>into momentum.</span>
           </h1>
           <p className="hero-deck">
             We help athletes stand out, meet the right brands, and manage the
@@ -115,8 +115,8 @@ export default function Home() {
             <figcaption>SURF</figcaption>
           </figure>
           <figure>
-            <img src="/media/tennis-campaign.jpg" alt="Tennis campaign concept" width="825" height="1024" loading="lazy" decoding="async" />
-            <figcaption>CAMPAIGN</figcaption>
+            <img src="/media/tennis-clean.jpg" alt="Tennis ball in play during a match" width="1126" height="1397" loading="lazy" decoding="async" />
+            <figcaption>TENNIS</figcaption>
           </figure>
         </div>
       </section>

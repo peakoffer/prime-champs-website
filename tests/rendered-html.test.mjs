@@ -32,8 +32,8 @@ test("server-renders the Prime Champs homepage", async () => {
 
   const html = await response.text();
   assert.match(html, /<title>Brand Opportunities for Athletes \| Prime Champs<\/title>/i);
-  assert.match(html, /Turn your sport/);
-  assert.match(html, /into opportunity\./);
+  assert.match(html, /Turn performance/);
+  assert.match(html, /into momentum\./);
   assert.match(html, /Apply as an athlete/);
   assert.match(html, /I&#x27;m a brand/);
   assert.match(html, /VisionWave Agency LLC/);
@@ -122,7 +122,15 @@ test("ships the final identity and credibility refinements", async () => {
   assert.doesNotMatch(styles, /\.brand-lockup img[\s\S]*?transform: scale\(2\.85\)/);
   assert.match(home, /fight-ring\.jpg/);
   assert.match(home, /surf-sunset-carve\.jpg/);
+  assert.match(home, /tennis-clean\.jpg/);
+  assert.match(home, />TENNIS</);
   assert.doesNotMatch(home, /surf-wipeout\.jpg/);
+  assert.doesNotMatch(shell, /footer-lead/);
+  assert.match(shell, /currentPath === "\/brands"/);
+  assert.match(shell, /\/apply\?type=brand/);
+  assert.match(styles, /\.athlete-cta-band \.button-primary[\s\S]*?color: var\(--white\)/);
+  assert.match(styles, /@media \(max-width: 720px\)[\s\S]*?\.compact-sports-section\s*{[\s\S]*?grid-template-columns: minmax\(0, 1fr\)/);
+  assert.doesNotMatch(styles, /mobile-sticky-apply/);
   assert.doesNotMatch(home + approach + brands, /300\+|internal scouting|research coverage|public roster/i);
   assert.match(approach, /What disciplined partnership work looks like/);
   assert.match(brands, /A fuller view of fit/);
@@ -135,7 +143,7 @@ test("removes all disposable starter artifacts", async () => {
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
-  assert.match(page, /Turn your sport/);
+  assert.match(page, /Turn performance/);
   assert.match(layout, /Prime Champs/);
   assert.doesNotMatch(layout, /codex-preview|Starter Project|_sites-preview/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);

@@ -34,7 +34,7 @@ export default function BrandsPage() {
           </a>
         </div>
         <div className="subpage-hero-image brand-hero-image">
-          <img src="/media/surf-carve.jpg" alt="Surfer carving across a blue wave" width="1260" height="1974" fetchPriority="high" />
+          <img src="/media/surf-carve-clean.jpg" alt="Surfer carving across a blue wave" width="1002" height="1570" fetchPriority="high" />
           <div className="image-data-label"><span>FILTER</span><strong>Credibility × audience</strong></div>
         </div>
       </section>

@@ -107,9 +107,6 @@ export default function AthletesPage() {
         </div>
       </section>
 
-      <a className="mobile-sticky-apply" href="/apply?type=athlete">
-        Apply now <span aria-hidden="true">↗</span>
-      </a>
     </PageShell>
   );
 }

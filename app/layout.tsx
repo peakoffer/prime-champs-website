@@ -71,7 +71,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       url: origin,
       siteName: "Prime Champs",
-      title: "Prime Champs | Turn your sport into opportunity.",
+      title: "Prime Champs | Turn performance into momentum.",
       description:
         "Brand opportunities and partnership support for modern athletes.",
       images: [
@@ -79,13 +79,13 @@ export async function generateMetadata(): Promise<Metadata> {
           url: socialImage,
           width: 1200,
           height: 630,
-          alt: "Prime Champs — Turn your sport into opportunity.",
+          alt: "Prime Champs — Turn performance into momentum.",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Prime Champs | Turn your sport into opportunity.",
+      title: "Prime Champs | Turn performance into momentum.",
       description:
         "Brand opportunities and partnership support for modern athletes.",
       images: [socialImage],
