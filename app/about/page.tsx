@@ -34,7 +34,7 @@ export default function AboutPage() {
 
       <section className="about-story section-pad">
         <div className="about-story-image">
-          <img src="/media/fight-night.jpg" alt="Two athletes competing in a combat sports match" width="1260" height="914" fetchPriority="high" />
+          <img src="/media/fight-bag.jpg" alt="Combat athlete training on a heavy bag" width="1260" height="1572" fetchPriority="high" />
         </div>
         <div className="about-story-copy">
           <p className="eyebrow dark">Our role</p>
@@ -89,8 +89,8 @@ export default function AboutPage() {
           </p>
         </div>
         <div className="network-images">
-          <img src="/media/surf-aerial.jpg" alt="Surfer high above a wave" width="1260" height="2037" loading="lazy" decoding="async" />
-          <img src="/media/fight-training.jpg" alt="Combat athlete training in a gym" width="1260" height="1549" loading="lazy" decoding="async" />
+          <img src="/media/surf-power-carve.jpg" alt="Surfer driving through a powerful turn" width="1260" height="1974" loading="lazy" decoding="async" />
+          <img src="/media/fight-ring.jpg" alt="Combat athlete landing a kick in competition" width="1260" height="1279" loading="lazy" decoding="async" />
           <img src="/media/tennis-campaign.jpg" alt="Prime Champs campaign concept on a tennis ball" width="825" height="1024" loading="lazy" decoding="async" />
         </div>
       </section>

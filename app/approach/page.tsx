@@ -5,7 +5,7 @@ import { pageMetadata } from "../seo";
 export const metadata: Metadata = pageMetadata({
   title: "Our Athlete–Brand Partnership Approach",
   description:
-    "See how Prime Champs researches athletes, assesses commercial fit, structures partnership expectations, and distinguishes process evidence from outcome claims.",
+    "See how Prime Champs evaluates athlete–brand fit, structures partnership expectations, and manages the work from first conversation through execution.",
   path: "/approach",
   keywords: ["athlete partnership process", "athlete scouting criteria", "sports sponsorship strategy", "brand athlete fit"],
 });
@@ -24,10 +24,10 @@ const faqSchema = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "Does Prime Champs publish a client roster?",
+      name: "How does Prime Champs evaluate partnership fit?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Prime Champs does not describe its internal research database as a public client roster. Named relationships and outcomes are published only when approval and substantiation are available.",
+        text: "Prime Champs reviews competitive credibility, audience quality, professional readiness, rights and timing, and commercial alignment before recommending a partnership.",
       },
     },
     {
@@ -52,12 +52,12 @@ export default function ApproachPage() {
       <section className="approach-hero">
         <div>
           <p className="eyebrow">The Prime Champs standard</p>
-          <h1>Evidence before endorsement.</h1>
+          <h1>Right athlete. Right brand. Clear terms.</h1>
         </div>
         <div className="approach-hero-side">
           <p>
-            Trust is not a wall of borrowed logos. It is a clear method, careful
-            claims, and work both sides can understand before they commit.
+            The best partnerships feel obvious to the audience because the work
+            behind them was deliberate from the first conversation.
           </p>
           <a className="button-primary" href="/apply">Start a fit review ↗</a>
         </div>
@@ -65,23 +65,19 @@ export default function ApproachPage() {
 
       <section className="ledger-section section-pad" aria-labelledby="ledger-title">
         <div className="ledger-header">
-          <p className="eyebrow dark">Research coverage / August 2026</p>
-          <h2 id="ledger-title">What we can substantiate today.</h2>
+          <p className="eyebrow dark">Partnership work / end to end</p>
+          <h2 id="ledger-title">What serious representation looks like.</h2>
           <p>
-            Our internal scouting source currently contains more than 300 athlete
-            profiles spanning at least eight sport categories. That is research
-            coverage—not a claim that every profile is represented by Prime Champs.
+            We combine direct relationship management with commercial discipline.
+            Every opportunity starts with context, moves through clear alignment,
+            and stays accountable through delivery.
           </p>
         </div>
         <div className="ledger-grid">
-          <article><span>300+</span><h3>Profiles researched</h3><p>Structured athlete records used to assess potential partnership fit.</p></article>
-          <article><span>8+</span><h3>Sport categories</h3><p>Cross-category coverage from combat and motorsport to surf and athletics.</p></article>
-          <article><span>5</span><h3>Fit dimensions</h3><p>A common screen for credibility, audience, readiness, rights, and alignment.</p></article>
+          <article><span>LISTEN</span><h3>Start with the athlete and the brief</h3><p>Goals, identity, audience, timing, and non-negotiables come before outreach.</p></article>
+          <article><span>ALIGN</span><h3>Make the commercial reality clear</h3><p>Creative role, value, deliverables, usage, schedule, and expectations are shaped together.</p></article>
+          <article><span>DELIVER</span><h3>Stay accountable through execution</h3><p>We support communication, negotiation, handoffs, and the decision to extend the work.</p></article>
         </div>
-        <p className="ledger-source">
-          Source: Prime Champs internal athlete research materials reviewed August 5, 2026.
-          Methodology and underlying records are private; named relationships are not implied.
-        </p>
       </section>
 
       <section className="fit-section section-pad dark-section">
@@ -98,26 +94,26 @@ export default function ApproachPage() {
 
       <section className="claim-standard section-pad">
         <div>
-          <p className="eyebrow dark">Claim discipline</p>
-          <h2>What we say—and what we refuse to imply.</h2>
+          <p className="eyebrow dark">Professional standards</p>
+          <h2>Clear claims build better partnerships.</h2>
         </div>
         <div className="claim-grid">
           <article className="claim-yes">
-            <span>WE CAN SAY</span>
+            <span>WE STAND BEHIND</span>
             <ul>
-              <li>How our scouting and qualification process works.</li>
-              <li>Which services and commercial decisions we support.</li>
-              <li>How many profiles and sport categories our research system covers.</li>
+              <li>The services and commercial decisions we support.</li>
+              <li>The direct athlete and brand relationships we manage.</li>
+              <li>The responsibilities and expectations agreed for each engagement.</li>
               <li>Our legal business identity and direct contact information.</li>
             </ul>
           </article>
           <article className="claim-no">
-            <span>WE WILL NOT INVENT</span>
+            <span>WE VERIFY BEFORE PUBLISHING</span>
             <ul>
               <li>Testimonials without the speaker&apos;s approval.</li>
               <li>Client or partner logos without a documented relationship.</li>
               <li>Campaign outcomes without a source and a clear measurement period.</li>
-              <li>A public roster from private scouting or prospect data.</li>
+              <li>Private deal terms or athlete information that should stay private.</li>
             </ul>
           </article>
         </div>

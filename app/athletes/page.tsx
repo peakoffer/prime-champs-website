@@ -86,7 +86,7 @@ export default function AthletesPage() {
 
       <section className="sports-section section-pad">
         <div className="sports-image">
-          <img src="/media/surf-aerial.jpg" alt="Surfer performing an aerial maneuver" width="1260" height="2037" loading="lazy" decoding="async" />
+          <img src="/media/surf-camera.jpg" alt="Surfer launching above a wave during a filmed session" width="1260" height="1853" loading="lazy" decoding="async" />
         </div>
         <div className="sports-copy">
           <p className="eyebrow dark">Who we work with</p>

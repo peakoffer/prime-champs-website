@@ -37,8 +37,9 @@ test("server-renders the Prime Champs homepage", async () => {
   assert.match(html, /I&#x27;m an athlete/);
   assert.match(html, /I represent a brand/);
   assert.match(html, /VisionWave Agency LLC/);
-  assert.match(html, /300\+/);
-  assert.match(html, /research coverage—not a public client roster/i);
+  assert.match(html, /Built through relationships/i);
+  assert.match(html, /Athlete relationships first/i);
+  assert.doesNotMatch(html, /300\+|research coverage|public client roster/i);
   assert.match(html, /application\/ld\+json/i);
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
   assert.equal(response.headers.get("x-frame-options"), "DENY");
@@ -87,6 +88,25 @@ test("uses reliable native navigation and the current Supabase intake", async ()
   assert.match(applyForm, /rmxuwyxpoazsuqvdadlo\.supabase\.co\/functions\/v1\/website-intake/);
   assert.doesNotMatch(applyForm, /kfjzwbopdssfvyiyofws/);
   assert.doesNotMatch(applyForm, /Authorization:/);
+});
+
+test("ships the final identity and credibility refinements", async () => {
+  const [home, approach, brands, shell, styles] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/approach/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/brands/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/SiteShell.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.doesNotMatch(home, /hero-mark|prime-champs-mark/);
+  assert.match(shell, /width="250"/);
+  assert.match(styles, /\.brand-lockup img[\s\S]*?transform: scale\(2\.85\)/);
+  assert.match(home, /fight-ring\.jpg/);
+  assert.match(home, /surf-wipeout\.jpg/);
+  assert.doesNotMatch(home + approach + brands, /300\+|internal scouting|research coverage|public roster/i);
+  assert.match(approach, /What serious representation looks like/);
+  assert.match(brands, /Relationship-backed fit/);
 });
 
 test("removes all disposable starter artifacts", async () => {

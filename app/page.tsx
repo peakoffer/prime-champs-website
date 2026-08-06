@@ -85,14 +85,6 @@ export default function Home() {
             <img src="/media/surf-aerial.jpg" alt="Surfer launching above a wave" width="1260" height="2037" fetchPriority="high" />
             <span>Surf / global culture</span>
           </div>
-          <img
-            className="hero-mark"
-            src="/media/prime-champs-mark.png"
-            alt=""
-            width="170"
-            height="170"
-            decoding="async"
-          />
         </div>
 
         <div className="match-line" aria-label="Prime Champs partnership model">
@@ -170,19 +162,20 @@ export default function Home() {
 
       <section className="proof-section section-pad" aria-labelledby="proof-heading">
         <div className="proof-intro">
-          <p className="eyebrow dark">The proof ledger</p>
-          <h2 id="proof-heading">Show the work. Label the claim.</h2>
+          <p className="eyebrow dark">Built through relationships</p>
+          <h2 id="proof-heading">Athletes are people. Partnerships are personal.</h2>
           <p>
-            Prime Champs maintains an internal scouting and qualification system
-            built to make athlete–brand fit more deliberate. These numbers describe
-            research coverage—not a public client roster or guaranteed outcome.
+            Prime Champs works directly with athletes across disciplines and
+            career stages. We learn the person, the competitive story, and the
+            commercial opportunity—then manage the details that turn mutual
+            interest into real work.
           </p>
-          <ArrowLink href="/approach">Review our qualification standard</ArrowLink>
+          <ArrowLink href="/approach">See how we build partnerships</ArrowLink>
         </div>
         <div className="proof-ledger">
-          <article><span>300+</span><strong>Athlete profiles researched</strong><p>Structured internal scouting records reviewed across performance, audience, story, and commercial signals.</p></article>
-          <article><span>8+</span><strong>Sport categories covered</strong><p>Combat, motorsport, surf, athletics, volleyball, hockey, ball sports, action sports, and adjacent fields.</p></article>
-          <article><span>5</span><strong>Fit dimensions screened</strong><p>Credibility, audience, professionalism, rights readiness, and commercial alignment.</p></article>
+          <article><span>DIRECT</span><strong>Athlete relationships first</strong><p>We work person-to-person—learning the athlete&apos;s goals, voice, schedule, existing obligations, and commercial direction.</p></article>
+          <article><span>CROSS-SPORT</span><strong>Experience across competitive cultures</strong><p>Combat sports, motorsports, surfing, athletics, volleyball, hockey, action sports, and adjacent fields.</p></article>
+          <article><span>FULL ARC</span><strong>From positioning through follow-through</strong><p>Strategy, introductions, negotiation, deliverables, communication, and the next credible chapter.</p></article>
         </div>
       </section>
 
@@ -199,12 +192,12 @@ export default function Home() {
         </div>
         <div className="culture-grid">
           <figure className="culture-image culture-wide">
-            <img src="/media/fight-night.jpg" alt="Athletes competing in a combat sports arena" width="1260" height="914" loading="lazy" decoding="async" />
-            <figcaption>COMBAT / LIVE MOMENT</figcaption>
+            <img src="/media/fight-ring.jpg" alt="Two combat athletes competing in a ring" width="1260" height="1279" loading="lazy" decoding="async" />
+            <figcaption>COMBAT / COMPETITION</figcaption>
           </figure>
           <figure className="culture-image culture-tall">
-            <img src="/media/surf-carve.jpg" alt="Surfer carving through a wave" width="1260" height="1974" loading="lazy" decoding="async" />
-            <figcaption>SURF / CULTURE</figcaption>
+            <img src="/media/surf-wipeout.jpg" alt="Surfer dropping from the crest of a large wave" width="1260" height="1723" loading="lazy" decoding="async" />
+            <figcaption>SURF / COMMITMENT</figcaption>
           </figure>
           <figure className="culture-image culture-small">
             <img src="/media/tennis-campaign.jpg" alt="Prime Champs campaign concept on a tennis ball" width="825" height="1024" loading="lazy" decoding="async" />

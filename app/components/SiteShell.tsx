@@ -12,8 +12,8 @@ export function SiteHeader({ currentPath }: { currentPath?: string }) {
         <img
           src="/media/prime-champs-wordmark.png"
           alt="Prime Champs"
-          width="152"
-          height="83"
+          width="250"
+          height="136"
           fetchPriority="high"
         />
       </a>

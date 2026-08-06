@@ -40,7 +40,7 @@ export default function BrandsPage() {
       </section>
 
       <section className="transparency-band">
-        <p><strong>Research-backed fit:</strong> Our internal system tracks 300+ athlete profiles across 8+ sport categories. Research coverage is not a public roster.</p>
+        <p><strong>Relationship-backed fit:</strong> We look beyond a talent list—combining athlete credibility, audience, professionalism, rights, timing, and the campaign objective.</p>
         <ArrowLink href="/approach">Review the qualification framework</ArrowLink>
       </section>
 
