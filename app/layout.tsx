@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: "%s | Prime Champs",
     },
     description:
-      "Prime Champs connects athletes with brands and platforms, supporting positioning, introductions, negotiation, and campaign growth.",
+      "Prime Champs helps athletes stand out, meet the right brands, and manage partnerships from first call to final post.",
     applicationName: "Prime Champs",
     category: "Sports marketing",
     creator: "Prime Champs",
@@ -71,23 +71,23 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       url: origin,
       siteName: "Prime Champs",
-      title: "Prime Champs | Turn performance into pull.",
+      title: "Prime Champs | Turn your sport into opportunity.",
       description:
-        "Athlete partnerships and brand campaigns built for the pace of modern sports culture.",
+        "Brand opportunities and partnership support for modern athletes.",
       images: [
         {
           url: socialImage,
           width: 1200,
           height: 630,
-          alt: "Prime Champs — Turn performance into pull.",
+          alt: "Prime Champs — Turn your sport into opportunity.",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Prime Champs | Turn performance into pull.",
+      title: "Prime Champs | Turn your sport into opportunity.",
       description:
-        "Athlete partnerships and brand campaigns built for the pace of modern sports culture.",
+        "Brand opportunities and partnership support for modern athletes.",
       images: [socialImage],
     },
   };

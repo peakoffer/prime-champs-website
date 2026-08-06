@@ -100,7 +100,7 @@ export default function AboutPage() {
           <p className="eyebrow dark">Start with context</p>
           <h2>Tell us what you compete for—or what your brand needs to change.</h2>
         </div>
-        <a className="button-primary dark-button" href="/apply">Start a conversation ↗</a>
+        <a className="button-primary dark-button" href="/apply">Apply or inquire ↗</a>
       </section>
     </PageShell>
   );

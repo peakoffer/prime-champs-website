@@ -31,14 +31,14 @@ test("server-renders the Prime Champs homepage", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Athlete Partnerships &amp; Brand Campaigns \| Prime Champs<\/title>/i);
-  assert.match(html, /Turn performance/);
-  assert.match(html, /into pull\./);
-  assert.match(html, /I&#x27;m an athlete/);
-  assert.match(html, /I represent a brand/);
+  assert.match(html, /<title>Brand Opportunities for Athletes \| Prime Champs<\/title>/i);
+  assert.match(html, /Turn your sport/);
+  assert.match(html, /into opportunity\./);
+  assert.match(html, /Apply as an athlete/);
+  assert.match(html, /I&#x27;m a brand/);
   assert.match(html, /VisionWave Agency LLC/);
-  assert.match(html, /Built around the athlete/i);
-  assert.match(html, /Athlete context first/i);
+  assert.match(html, /No huge following required/i);
+  assert.match(html, /Apply once\. We take it from there\./i);
   assert.doesNotMatch(html, /300\+|research coverage|public client roster/i);
   assert.match(html, /application\/ld\+json/i);
   assert.match(
@@ -61,9 +61,16 @@ test("renders every public route and the dual intake form", async () => {
   const formHtml = await (await render("/apply")).text();
   assert.match(formHtml, /I&#x27;m an athlete/);
   assert.match(formHtml, /I represent a brand/);
-  assert.match(formHtml, /Send athlete profile/);
+  assert.match(formHtml, /Send my profile/);
+  assert.match(formHtml, /Best social profile/);
+  assert.match(formHtml, /Phone/);
   assert.match(formHtml, /privacy policy/);
-  assert.match(formHtml, /No automatic mailing-list enrollment/);
+  assert.match(formHtml, /Short athlete application/);
+  assert.doesNotMatch(formHtml, /Total social following|Competitive highlights|Current or past sponsors/);
+
+  const brandFormHtml = await (await render("/apply?type=brand")).text();
+  assert.match(brandFormHtml, /Focused campaign brief/);
+  assert.match(brandFormHtml, /Send campaign brief/);
 });
 
 test("ships indexable SEO support files and unique page metadata", async () => {
@@ -128,7 +135,7 @@ test("removes all disposable starter artifacts", async () => {
     readFile(new URL("../package.json", import.meta.url), "utf8"),
   ]);
 
-  assert.match(page, /Turn performance/);
+  assert.match(page, /Turn your sport/);
   assert.match(layout, /Prime Champs/);
   assert.doesNotMatch(layout, /codex-preview|Starter Project|_sites-preview/);
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);

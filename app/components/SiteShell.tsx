@@ -1,7 +1,7 @@
 const primaryLinks = [
   { href: "/athletes", label: "For athletes" },
   { href: "/brands", label: "For brands" },
-  { href: "/approach", label: "Our approach" },
+  { href: "/approach", label: "How it works" },
   { href: "/about", label: "About" },
 ];
 
@@ -35,7 +35,7 @@ export function SiteHeader({ currentPath }: { currentPath?: string }) {
         href="/apply"
         aria-current={currentPath === "/apply" ? "page" : undefined}
       >
-        Start a conversation <span aria-hidden="true">↗</span>
+        Apply now <span aria-hidden="true">↗</span>
       </a>
 
       <details className="mobile-nav">
@@ -54,7 +54,7 @@ export function SiteHeader({ currentPath }: { currentPath?: string }) {
             </a>
           ))}
           <a href="/apply" aria-current={currentPath === "/apply" ? "page" : undefined}>
-            Start a conversation ↗
+            Apply now ↗
           </a>
         </nav>
       </details>
@@ -67,13 +67,13 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="footer-lead">
         <p className="eyebrow">The next move starts here</p>
-        <h2>Build the partnership people remember.</h2>
-        <a className="text-link light" href="/apply">
-          Tell us what you&apos;re building <span aria-hidden="true">↗</span>
+        <h2>Ready to make your next move?</h2>
+        <a className="text-link light" href="/apply?type=athlete">
+          Apply now <span aria-hidden="true">↗</span>
         </a>
       </div>
 
-      <div className="footer-grid">
+      <div className="footer-grid footer-grid-compact">
         <div className="footer-brand">
           <a className="footer-brand-lockup" href="/" aria-label="Prime Champs home">
             <img
@@ -87,8 +87,7 @@ export function SiteFooter() {
           </a>
           <span className="footer-brand-signature">Athlete × brand partnerships</span>
           <p>
-            Athlete representation, brand partnerships, and campaign support
-            built for the pace of modern sports culture.
+            Helping athletes and brands build partnerships that fit.
           </p>
         </div>
 
@@ -96,7 +95,7 @@ export function SiteFooter() {
           <p className="footer-label">Explore</p>
           <a href="/athletes">For athletes</a>
           <a href="/brands">For brands</a>
-          <a href="/approach">Our approach</a>
+          <a href="/approach">How it works</a>
           <a href="/about">About Prime Champs</a>
           <a href="/apply">Apply or inquire</a>
         </div>
@@ -111,10 +110,6 @@ export function SiteFooter() {
           >
             Instagram ↗
           </a>
-        </div>
-
-        <div>
-          <p className="footer-label">Details</p>
           <a href="/privacy">Privacy</a>
           <a href="/terms">Terms</a>
           <p className="legal-identity">

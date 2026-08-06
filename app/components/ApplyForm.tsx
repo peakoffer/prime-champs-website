@@ -16,14 +16,7 @@ const athleteFields = new Set([
   "primary_sport",
   "experience_level",
   "instagram_handle",
-  "tiktok_handle",
-  "youtube_handle",
-  "twitter_handle",
-  "social_media_following",
-  "notable_achievements",
-  "current_sponsorships",
   "career_goals",
-  "additional_info",
 ]);
 
 const brandFields = new Set([
@@ -126,18 +119,18 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
         <p className="eyebrow dark">Choose your lane</p>
         <h2 id="application-heading">
           {leadType === "athlete"
-            ? "Put your career in the right room."
+            ? "Send your athlete profile."
             : "Build a campaign with real competitive energy."}
         </h2>
         <p>
           {leadType === "athlete"
-            ? "Share the essentials. We review sport, story, audience, goals, and commercial readiness—not follower count alone."
+            ? "A few essentials are enough to start. We review the whole athlete—not follower count alone."
             : "Tell us the audience, objective, timeline, and budget. We’ll review it against athlete fit, timing, and our current capacity."}
         </p>
         <ul className="form-expectations" aria-label="What happens next">
-          <li>Direct review against current fit and capacity</li>
-          <li>No automatic mailing-list enrollment</li>
-          <li>No representation or campaign guarantee</li>
+          <li>{leadType === "athlete" ? "Short athlete application" : "Focused campaign brief"}</li>
+          <li>Direct review by Prime Champs</li>
+          <li>{leadType === "athlete" ? "No representation or deal guarantee" : "No campaign guarantee"}</li>
         </ul>
       </div>
 
@@ -190,7 +183,7 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
 
           <div className="form-submit-row">
             <button className="button-primary form-submit" type="submit" disabled={status === "submitting"}>
-              {status === "submitting" ? "Sending…" : leadType === "athlete" ? "Send athlete profile ↗" : "Send campaign brief ↗"}
+              {status === "submitting" ? "Sending…" : leadType === "athlete" ? "Send my profile ↗" : "Send campaign brief ↗"}
             </button>
             <p>
               By sending this form, you agree to our{" "}
@@ -248,66 +241,23 @@ function AthleteFields() {
         </label>
       </div>
 
-      <div className="field-grid two">
-        <label>
-          Instagram
-          <input name="instagram_handle" placeholder="@handle" autoComplete="off" />
-        </label>
-        <label>
-          TikTok
-          <input name="tiktok_handle" placeholder="@handle" autoComplete="off" />
-        </label>
-        <label>
-          YouTube
-          <input name="youtube_handle" placeholder="Channel or URL" autoComplete="off" />
-        </label>
-        <label>
-          X / Twitter
-          <input name="twitter_handle" placeholder="@handle" autoComplete="off" />
-        </label>
-      </div>
-
       <label>
-        Total social following <small>Optional</small>
-        <select name="social_media_following" defaultValue="">
-          <option value="">Select range</option>
-          <option>Under 10K</option>
-          <option>10K–50K</option>
-          <option>50K–100K</option>
-          <option>100K–500K</option>
-          <option>500K–1M</option>
-          <option>1M+</option>
-        </select>
-      </label>
-
-      <label>
-        Competitive highlights <small>Optional</small>
-        <textarea
-          name="notable_achievements"
-          maxLength={2000}
-          placeholder="Titles, events, rankings, records, press, or career moments that matter."
+        Best social profile <span>*</span>
+        <input
+          name="instagram_handle"
+          required
+          placeholder="Instagram, TikTok, YouTube, or profile URL"
+          autoComplete="url"
         />
       </label>
       <label>
-        Current or past sponsors
-        <textarea
-          name="current_sponsorships"
-          maxLength={2000}
-          placeholder="Brands, platforms, or partnerships you have worked with."
-        />
-      </label>
-      <label>
-        What do you want to build next? <span>*</span>
+        What are you looking for? <span>*</span>
         <textarea
           name="career_goals"
           required
-          maxLength={2000}
-          placeholder="Tell us what the right partnership would unlock for your career."
+          maxLength={1000}
+          placeholder="Brand deals, representation, campaign support, or something else?"
         />
-      </label>
-      <label>
-        Anything else we should know?
-        <textarea name="additional_info" maxLength={2000} />
       </label>
     </>
   );

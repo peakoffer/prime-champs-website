@@ -23,12 +23,12 @@ export default async function ApplyPage({
     <PageShell currentPath="/apply">
       <section className="apply-hero">
         <div>
-          <p className="eyebrow">Athletes / brands / agencies</p>
-          <h1>Bring the context. We&apos;ll find the next move.</h1>
+          <p className="eyebrow">Apply or inquire</p>
+          <h1>Tell us who you are. We&apos;ll take it from there.</h1>
         </div>
         <p>
-          Choose the inquiry that fits, share the details that matter, and our
-          team will review it directly. No generic pitch deck required.
+          Athletes can send a short profile. Brands can share a campaign brief.
+          Every submission is reviewed directly.
         </p>
       </section>
       <ApplyForm initialType={initialType} />

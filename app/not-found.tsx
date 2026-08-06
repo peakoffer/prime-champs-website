@@ -9,7 +9,7 @@ export default function NotFound() {
         <p>The page may have moved, but the next useful route is close.</p>
         <div className="button-row">
           <a className="button-primary" href="/">Return home ↗</a>
-          <a className="button-secondary" href="/apply">Start a conversation ↗</a>
+          <a className="button-secondary" href="/apply">Apply or inquire ↗</a>
         </div>
       </section>
     </PageShell>

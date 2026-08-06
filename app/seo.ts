@@ -31,7 +31,7 @@ export function pageMetadata({
           url: "/og.png",
           width: 1200,
           height: 630,
-          alt: "Prime Champs — Turn performance into pull.",
+          alt: "Prime Champs — Turn your sport into opportunity.",
         },
       ],
     },
