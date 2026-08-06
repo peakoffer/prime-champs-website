@@ -196,8 +196,8 @@ export default function Home() {
             <figcaption>COMBAT / COMPETITION</figcaption>
           </figure>
           <figure className="culture-image culture-tall">
-            <img src="/media/surf-wipeout.jpg" alt="Surfer dropping from the crest of a large wave" width="1260" height="1723" loading="lazy" decoding="async" />
-            <figcaption>SURF / COMMITMENT</figcaption>
+            <img src="/media/surf-sunset-carve.jpg" alt="Surfer carving across a wave at sunset" width="1260" height="1623" loading="lazy" decoding="async" />
+            <figcaption>SURF / CONTROL</figcaption>
           </figure>
           <figure className="culture-image culture-small">
             <img src="/media/tennis-campaign.jpg" alt="Prime Champs campaign concept on a tennis ball" width="825" height="1024" loading="lazy" decoding="async" />

@@ -28,7 +28,7 @@ export function pageMetadata({
       siteName: "Prime Champs",
       images: [
         {
-          url: "/og.png",
+          url: "/og.jpg",
           width: 1731,
           height: 909,
           alt: "Prime Champs — Turn performance into pull.",
@@ -39,7 +39,7 @@ export function pageMetadata({
       card: "summary_large_image",
       title: `${title} | Prime Champs`,
       description,
-      images: ["/og.png"],
+      images: ["/og.jpg"],
     },
   };
 }

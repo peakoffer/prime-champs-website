@@ -103,10 +103,12 @@ test("ships the final identity and credibility refinements", async () => {
   ]);
 
   assert.doesNotMatch(home, /hero-mark|prime-champs-mark/);
-  assert.match(shell, /width="250"/);
-  assert.match(styles, /\.brand-lockup img[\s\S]*?transform: scale\(2\.85\)/);
+  assert.match(shell, /\/brand\/prime-champs-wordmark-reversed\.png/);
+  assert.match(shell, /width="1236"/);
+  assert.doesNotMatch(styles, /\.brand-lockup img[\s\S]*?transform: scale\(2\.85\)/);
   assert.match(home, /fight-ring\.jpg/);
-  assert.match(home, /surf-wipeout\.jpg/);
+  assert.match(home, /surf-sunset-carve\.jpg/);
+  assert.doesNotMatch(home, /surf-wipeout\.jpg/);
   assert.doesNotMatch(home + approach + brands, /300\+|internal scouting|research coverage|public roster/i);
   assert.match(approach, /What serious representation looks like/);
   assert.match(brands, /Relationship-backed fit/);

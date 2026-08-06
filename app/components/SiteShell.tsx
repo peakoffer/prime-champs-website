@@ -10,10 +10,10 @@ export function SiteHeader({ currentPath }: { currentPath?: string }) {
     <header className="site-header">
       <a className="brand-lockup" href="/" aria-label="Prime Champs home">
         <img
-          src="/media/prime-champs-wordmark.png"
+          src="/brand/prime-champs-wordmark-reversed.png"
           alt="Prime Champs"
-          width="250"
-          height="136"
+          width="1236"
+          height="338"
           fetchPriority="high"
         />
       </a>
@@ -75,14 +75,17 @@ export function SiteFooter() {
 
       <div className="footer-grid">
         <div className="footer-brand">
-          <img
-            src="/media/prime-champs-wordmark.png"
-            alt="Prime Champs"
-            width="176"
-            height="96"
-            loading="lazy"
-            decoding="async"
-          />
+          <a className="footer-brand-lockup" href="/" aria-label="Prime Champs home">
+            <img
+              src="/brand/prime-champs-wordmark-reversed.png"
+              alt="Prime Champs"
+              width="1236"
+              height="338"
+              loading="lazy"
+              decoding="async"
+            />
+          </a>
+          <span className="footer-brand-signature">Athlete × brand partnerships</span>
           <p>
             Athlete representation, brand partnerships, and campaign support
             built for the pace of modern sports culture.

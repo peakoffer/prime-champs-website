@@ -27,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = requestHeaders.get("host") || "www.prime-champs.com";
   const protocol = host.includes("localhost") ? "http" : "https";
   const origin = `${protocol}://${host}`;
-  const socialImage = `${origin}/og.png`;
+  const socialImage = `${origin}/og.jpg`;
 
   return {
     metadataBase: new URL(origin),
@@ -94,7 +94,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     name: "Prime Champs",
     legalName: "VisionWave Agency LLC",
     url: productionUrl,
-    logo: `${productionUrl}/media/prime-champs-mark.png`,
+    logo: `${productionUrl}/brand/prime-champs-wordmark-dark.png`,
     description:
       "Athlete representation, brand partnerships, and sports campaign support.",
     email: "info@prime-champs.com",

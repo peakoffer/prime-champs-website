@@ -124,23 +124,20 @@ h3 {
 .brand-lockup {
   display: inline-flex;
   align-items: center;
-  width: 250px;
-  height: 72px;
-  contain: strict;
-  overflow: clip;
+  width: 254px;
+  min-width: 0;
 }
 
 .brand-lockup img {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transform: scale(2.85);
+  height: auto;
 }
 
 .footer-brand img {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
+  height: auto;
 }
 
 .desktop-nav {
@@ -1611,10 +1608,25 @@ h3 {
   border-bottom: 1px solid var(--line-dark);
 }
 
-.footer-brand img {
-  width: 176px;
-  height: 80px;
-  margin-bottom: 20px;
+.footer-brand-lockup {
+  display: block;
+  width: min(100%, 256px);
+  margin-bottom: 18px;
+}
+
+.footer-brand-signature {
+  display: block;
+  width: fit-content;
+  margin-bottom: 22px;
+  padding-top: 13px;
+  border-top: 2px solid var(--cyan);
+  color: var(--cyan);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  line-height: 1.4;
+  text-transform: uppercase;
 }
 
 .footer-brand p {
@@ -2221,8 +2233,7 @@ h3 {
   }
 
   .brand-lockup {
-    width: 200px;
-    height: 58px;
+    width: 186px;
   }
 
   .eyebrow {
@@ -2465,6 +2476,40 @@ h3 {
 }
 
 @media (max-width: 480px) {
+  .site-header {
+    gap: 12px;
+  }
+
+  .brand-lockup {
+    width: 164px;
+  }
+
+  .match-line {
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    padding-right: 0;
+    padding-left: 0;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+
+  .match-line > :not(strong) {
+    display: none;
+  }
+
+  .split-heading,
+  .culture-section {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .split-heading,
+  .split-heading > *,
+  .culture-copy,
+  .culture-grid {
+    min-width: 0;
+  }
+
   .hero-copy h1,
   .subpage-hero-copy h1,
   .about-hero h1,
@@ -2499,7 +2544,18 @@ h3 {
   .about-story-copy h2,
   .network-copy h2,
   .form-intro h2 {
-    font-size: clamp(3rem, 13.6vw, 4.2rem);
+    font-size: clamp(2.45rem, 12vw, 4.2rem);
+  }
+
+  .service-list article {
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .service-list h3 {
+    min-width: 0;
+    font-size: clamp(1.55rem, 7.8vw, 1.9rem);
+    overflow-wrap: anywhere;
   }
 
   .home-hero {
@@ -2521,7 +2577,7 @@ h3 {
   }
 
   .proof-intro h2 {
-    font-size: clamp(2.9rem, 12vw, 3.6rem);
+    font-size: clamp(2.45rem, 12vw, 3.6rem);
   }
 
   .ledger-header h2 {
@@ -2535,7 +2591,7 @@ h3 {
   }
 
   .lane-card h3 {
-    font-size: 3.7rem;
+    font-size: clamp(2.65rem, 14vw, 3.7rem);
   }
 
   .culture-grid {
@@ -2576,7 +2632,7 @@ h3 {
 
   .inline-cta h2,
   .footer-lead h2 {
-    font-size: 14vw;
+    font-size: 13vw;
   }
 
   .footer-grid {
