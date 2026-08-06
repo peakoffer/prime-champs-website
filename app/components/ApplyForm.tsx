@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useRef, useState } from "react";
+import { trackEvent } from "./AnalyticsBridge";
 
 type LeadType = "athlete" | "brand";
 
@@ -43,6 +44,10 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
     setLeadType(type);
     setStatus("idle");
     setMessage("");
+    trackEvent("form_type_selected", {
+      lead_type: type,
+      location: "apply_form_toggle",
+    });
   }
 
   async function submitLead(event: FormEvent<HTMLFormElement>) {
@@ -66,6 +71,13 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
       source_url: window.location.href,
       referrer: document.referrer || null,
     };
+
+    const searchParams = new URL(window.location.href).searchParams;
+    ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach(
+      (field) => {
+        payload[field] = searchParams.get(field);
+      }
+    );
 
     const activeFields = leadType === "athlete" ? athleteFields : brandFields;
     activeFields.forEach((field) => {
@@ -98,6 +110,7 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
 
       formRef.current?.reset();
       setStatus("success");
+      trackEvent("form_submit_success", { lead_type: leadType });
       setMessage(
         leadType === "athlete"
           ? "Your athlete profile is in. We’ll review the fit and follow up by email."
@@ -105,6 +118,7 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
       );
     } catch (error) {
       setStatus("error");
+      trackEvent("form_submit_error", { lead_type: leadType });
       setMessage(
         error instanceof Error
           ? error.message
@@ -130,7 +144,7 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
         <ul className="form-expectations" aria-label="What happens next">
           <li>{leadType === "athlete" ? "Short athlete application" : "Focused campaign brief"}</li>
           <li>Direct review by Prime Champs</li>
-          <li>{leadType === "athlete" ? "No representation or deal guarantee" : "No campaign guarantee"}</li>
+          <li>{leadType === "athlete" ? "We contact strong fits directly" : "Clear next steps after review"}</li>
         </ul>
       </div>
 
@@ -154,7 +168,7 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
           </button>
         </div>
 
-        <form ref={formRef} onSubmit={submitLead}>
+        <form ref={formRef} onSubmit={submitLead} data-track-form="application" data-lead-type={leadType}>
           <input
             className="honey-field"
             name="company_fax"

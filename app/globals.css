@@ -1936,9 +1936,9 @@ h3 {
 
 .claim-yes > span { color: var(--blue); }
 .claim-no { background: var(--ink); color: var(--white); }
-.claim-no > span { color: var(--coral); }
+.claim-no > span { color: var(--cyan); }
 
-.claim-grid ul { margin: 120px 0 0; padding-left: 18px; }
+.claim-grid ul { margin: 84px 0 0; padding-left: 18px; }
 .claim-grid li + li { margin-top: 18px; }
 .claim-no li { color: var(--chrome); }
 

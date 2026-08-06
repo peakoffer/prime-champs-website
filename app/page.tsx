@@ -61,10 +61,10 @@ export default function Home() {
             deal from first call to final post.
           </p>
           <div className="button-row">
-            <a className="button-primary" href="/apply?type=athlete">
+            <a className="button-primary" href="/apply?type=athlete" data-track="cta_click" data-track-label="home_apply_athlete" data-track-location="hero">
               Apply as an athlete <span aria-hidden="true">↗</span>
             </a>
-            <a className="button-secondary" href="/brands">
+            <a className="button-secondary" href="/brands" data-track="cta_click" data-track-label="home_view_brands" data-track-location="hero">
               I&apos;m a brand <span aria-hidden="true">↗</span>
             </a>
           </div>
@@ -84,7 +84,7 @@ export default function Home() {
         <div className="trust-rail" aria-label="What athletes should know">
           <span>No huge following required</span>
           <span>Every profile reviewed</span>
-          <span>No deal guarantees</span>
+          <span>Support through the deal</span>
         </div>
       </section>
 
@@ -142,7 +142,7 @@ export default function Home() {
           <p className="eyebrow dark">Your next move</p>
           <h2>Ready to get in the right room?</h2>
         </div>
-        <a className="button-primary" href="/apply?type=athlete">
+        <a className="button-primary" href="/apply?type=athlete" data-track="cta_click" data-track-label="home_send_profile" data-track-location="closing_cta">
           Send your athlete profile <span aria-hidden="true">↗</span>
         </a>
       </section>

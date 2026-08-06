@@ -29,7 +29,7 @@ export default function BrandsPage() {
             match, partnership structure, and activation—with clear support
             from brief through delivery.
           </p>
-          <a className="button-primary" href="/apply?type=brand">
+          <a className="button-primary" href="/apply?type=brand" data-track="cta_click" data-track-label="brands_campaign_brief" data-track-location="hero">
             Start a campaign brief ↗
           </a>
         </div>
@@ -99,7 +99,7 @@ export default function BrandsPage() {
           <p className="eyebrow dark">Have a live brief?</p>
           <h2>Give us the outcome, not a list of followers.</h2>
         </div>
-        <ArrowLink href="/apply?type=brand">Start the brand inquiry</ArrowLink>
+        <ArrowLink href="/apply?type=brand">Start a campaign brief</ArrowLink>
       </section>
     </PageShell>
   );

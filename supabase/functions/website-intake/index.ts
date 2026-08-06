@@ -2,11 +2,11 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 type LeadType = "athlete" | "brand";
+type SupabaseClient = ReturnType<typeof createClient>;
 
 const allowedOrigins = new Set([
   "https://www.prime-champs.com",
   "https://prime-champs.com",
-  "https://prime-champs-redesign.zacattk1000.chatgpt.site",
   "http://localhost:3000",
   "http://localhost:3001",
   "http://127.0.0.1:3000",
@@ -17,14 +17,7 @@ const allowedFields = new Set([
   "primary_sport",
   "experience_level",
   "instagram_handle",
-  "tiktok_handle",
-  "youtube_handle",
-  "twitter_handle",
-  "social_media_following",
-  "notable_achievements",
-  "current_sponsorships",
   "career_goals",
-  "additional_info",
   "company_name",
   "role",
   "company_website",
@@ -34,6 +27,19 @@ const allowedFields = new Set([
   "campaign_goals",
   "target_audience",
   "partnership_timeline",
+  "utm_source",
+  "utm_medium",
+  "utm_campaign",
+  "utm_content",
+  "utm_term",
+]);
+
+const allowedEvents = new Set([
+  "cta_click",
+  "form_type_selected",
+  "form_started",
+  "form_submit_success",
+  "form_submit_error",
 ]);
 
 function corsHeaders(origin: string) {
@@ -43,7 +49,7 @@ function corsHeaders(origin: string) {
     "Access-Control-Allow-Methods": "POST, OPTIONS",
     "Access-Control-Max-Age": "86400",
     "Content-Type": "application/json; charset=utf-8",
-    "Vary": "Origin",
+    Vary: "Origin",
   };
 }
 
@@ -61,13 +67,13 @@ function clean(value: unknown, max = 2_000): string | null {
 }
 
 function escapeHtml(value: string) {
-  return value.replace(/[&<>'"]/g, (char) => ({
+  return value.replace(/[&<>'"]/g, (character) => ({
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
     "'": "&#39;",
     '"': "&quot;",
-  })[char] ?? char);
+  })[character] ?? character);
 }
 
 async function sha256(value: string) {
@@ -93,6 +99,168 @@ function envKey(groupName: string, fallbackName: string) {
   return Deno.env.get(fallbackName) ?? "";
 }
 
+function cleanEventData(value: unknown) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+
+  const output: Record<string, string | number | boolean | null> = {};
+  for (const [key, entry] of Object.entries(value).slice(0, 20)) {
+    const safeKey = key.replace(/[^a-z0-9_]/gi, "").slice(0, 50);
+    if (!safeKey) continue;
+    if (typeof entry === "string") output[safeKey] = clean(entry, 500);
+    if (typeof entry === "number" && Number.isFinite(entry)) output[safeKey] = entry;
+    if (typeof entry === "boolean" || entry === null) output[safeKey] = entry;
+  }
+  return output;
+}
+
+function normalizeSocialProfile(value: string) {
+  const trimmed = value.trim();
+  if (!trimmed.includes(".") && !trimmed.includes("/")) {
+    return { instagram_handle: trimmed.replace(/^@/, "").toLowerCase() };
+  }
+
+  try {
+    const url = new URL(/^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`);
+    const handle = url.pathname.split("/").filter(Boolean)[0]?.replace(/^@/, "").toLowerCase() ?? null;
+    if (url.hostname.includes("instagram.com")) {
+      return { instagram_handle: handle, instagram_url: url.toString() };
+    }
+    if (url.hostname.includes("tiktok.com")) {
+      return { tiktok_handle: handle, tiktok_url: url.toString() };
+    }
+    return { profile_url: url.toString() };
+  } catch {
+    return { profile_url: trimmed };
+  }
+}
+
+async function routeLeadToCrm(
+  supabase: SupabaseClient,
+  lead: { id: string; lead_type: LeadType; full_name: string; email: string; phone: string | null },
+  details: Record<string, string>,
+) {
+  const { data: organization, error: organizationError } = await supabase
+    .from("organizations")
+    .select("id")
+    .eq("slug", "prime-champs")
+    .single();
+
+  if (organizationError || !organization) {
+    throw new Error("Prime Champs organization was not found.");
+  }
+
+  if (lead.lead_type === "brand") {
+    const { error: notificationError } = await supabase
+      .from("activity_notifications")
+      .insert({
+        organization_id: organization.id,
+        type: "website_brand_inquiry",
+        title: "New website brand inquiry",
+        message: `${lead.full_name} from ${details.company_name} submitted a campaign brief.`,
+        metadata: {
+          website_lead_id: lead.id,
+          email: lead.email,
+          phone: lead.phone,
+          company_name: details.company_name,
+          role: details.role,
+          campaign_goals: details.campaign_goals,
+          target_sports: details.target_sports,
+        },
+        link: "/",
+      });
+    if (notificationError) throw notificationError;
+
+    const { error: routeUpdateError } = await supabase
+      .from("website_leads")
+      .update({
+        organization_id: organization.id,
+        routing_status: "routed",
+        routed_at: new Date().toISOString(),
+      })
+      .eq("id", lead.id);
+    if (routeUpdateError) throw routeUpdateError;
+    return null;
+  }
+
+  const social = normalizeSocialProfile(details.instagram_handle);
+  let existingAthlete: { id: string } | null = null;
+
+  const { data: emailMatch } = await supabase
+    .from("athletes")
+    .select("id")
+    .eq("organization_id", organization.id)
+    .eq("email", lead.email)
+    .limit(1)
+    .maybeSingle();
+  existingAthlete = emailMatch;
+
+  if (!existingAthlete && social.instagram_handle) {
+    const { data: handleMatch } = await supabase
+      .from("athletes")
+      .select("id")
+      .eq("organization_id", organization.id)
+      .eq("instagram_handle", social.instagram_handle)
+      .limit(1)
+      .maybeSingle();
+    existingAthlete = handleMatch;
+  }
+
+  let athleteId = existingAthlete?.id ?? null;
+  if (!athleteId) {
+    const notes = [
+      "Inbound website application.",
+      `Competitive level: ${details.experience_level}`,
+      `Goals: ${details.career_goals}`,
+      lead.phone ? `Phone: ${lead.phone}` : null,
+      `Website lead: ${lead.id}`,
+    ].filter(Boolean).join("\n");
+
+    const { data: athlete, error: athleteError } = await supabase
+      .from("athletes")
+      .insert({
+        organization_id: organization.id,
+        name: lead.full_name,
+        sport: details.primary_sport,
+        email: lead.email,
+        ...social,
+        notes,
+        source: "manual",
+        enrichment_status: "pending",
+        pipeline_stage: "approval",
+      })
+      .select("id")
+      .single();
+    if (athleteError || !athlete) throw athleteError ?? new Error("Athlete routing failed.");
+    athleteId = athlete.id;
+  }
+
+  const { error: notificationError } = await supabase
+    .from("activity_notifications")
+    .insert({
+      organization_id: organization.id,
+      athlete_id: athleteId,
+      type: "website_athlete_application",
+      title: "New website athlete application",
+      message: `${lead.full_name} applied through prime-champs.com.`,
+      metadata: { website_lead_id: lead.id, matched_existing: Boolean(existingAthlete) },
+      link: `/athletes/${athleteId}`,
+    });
+  if (notificationError) console.error("Website lead notification failed", notificationError.message);
+
+  const { error: routeUpdateError } = await supabase
+    .from("website_leads")
+    .update({
+      organization_id: organization.id,
+      crm_athlete_id: athleteId,
+      routing_status: "routed",
+      routed_at: new Date().toISOString(),
+    })
+    .eq("id", lead.id);
+  if (routeUpdateError) throw routeUpdateError;
+
+  return athleteId;
+}
+
 Deno.serve(async (request) => {
   const origin = request.headers.get("origin") ?? "";
   if (!allowedOrigins.has(origin)) {
@@ -105,7 +273,6 @@ Deno.serve(async (request) => {
   if (request.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: corsHeaders(origin) });
   }
-
   if (request.method !== "POST") {
     return respond(origin, { error: "Method not allowed." }, 405);
   }
@@ -125,6 +292,32 @@ Deno.serve(async (request) => {
     input = await request.json();
   } catch {
     return respond(origin, { error: "Invalid JSON payload." }, 400);
+  }
+
+  const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
+  const secretKey = envKey("SUPABASE_SECRET_KEYS", "SUPABASE_SERVICE_ROLE_KEY");
+  if (!supabaseUrl || !secretKey) {
+    console.error("website-intake is missing Supabase environment variables");
+    return respond(origin, { error: "The inquiry service is unavailable." }, 503);
+  }
+  const supabase = createClient(supabaseUrl, secretKey, {
+    auth: { persistSession: false, autoRefreshToken: false },
+  });
+
+  const eventType = clean(input.event_type, 64);
+  if (eventType) {
+    if (!allowedEvents.has(eventType)) {
+      return respond(origin, { error: "Unknown event type." }, 400);
+    }
+    const { error: eventError } = await supabase.from("analytics_events").insert({
+      event_type: `website_${eventType}`,
+      metadata: cleanEventData(input.event_data),
+    });
+    if (eventError) {
+      console.error("website-intake event insert failed", eventError.message);
+      return respond(origin, { error: "Event could not be recorded." }, 500);
+    }
+    return respond(origin, { ok: true }, 202);
   }
 
   if (clean(input.company_fax, 200)) {
@@ -153,10 +346,9 @@ Deno.serve(async (request) => {
   }
 
   const requiredFields = leadType === "athlete"
-    ? ["primary_sport", "experience_level", "career_goals"]
+    ? ["primary_sport", "experience_level", "instagram_handle", "career_goals"]
     : ["company_name", "role", "target_sports", "campaign_goals"];
-  const missing = requiredFields.find((field) => !details[field]);
-  if (missing) {
+  if (requiredFields.some((field) => !details[field])) {
     return respond(origin, { error: "Complete the required inquiry fields." }, 400);
   }
 
@@ -170,20 +362,9 @@ Deno.serve(async (request) => {
     ip ? sha256(ip) : Promise.resolve(null),
   ]);
 
-  const supabaseUrl = Deno.env.get("SUPABASE_URL") ?? "";
-  const secretKey = envKey("SUPABASE_SECRET_KEYS", "SUPABASE_SERVICE_ROLE_KEY");
-  if (!supabaseUrl || !secretKey) {
-    console.error("website-intake is missing Supabase environment variables");
-    return respond(origin, { error: "The inquiry service is unavailable." }, 503);
-  }
-
-  const supabase = createClient(supabaseUrl, secretKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
-  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+  const oneHourAgo = new Date(Date.now() - 60 * 60 * 1_000).toISOString();
   const rateFilters = [`email_hash.eq.${emailHash}`];
   if (ipHash) rateFilters.push(`ip_hash.eq.${ipHash}`);
-
   const { count: recentCount, error: countError } = await supabase
     .from("website_leads")
     .select("id", { count: "exact", head: true })
@@ -223,13 +404,33 @@ Deno.serve(async (request) => {
       notification_status: isTest ? "suppressed" : canNotify ? "pending" : "not_configured",
       is_test: isTest,
     })
-    .select("id")
+    .select("id,lead_type,full_name,email,phone")
     .single();
 
   if (insertError || !lead) {
     console.error("website-intake insert failed", insertError?.message);
     return respond(origin, { error: "The inquiry could not be saved." }, 500);
   }
+
+  if (!isTest) {
+    try {
+      await routeLeadToCrm(supabase, lead, details);
+    } catch (error) {
+      const routingError = error instanceof Error ? error.message : "Unknown routing error";
+      console.error("website-intake CRM routing failed", routingError);
+      await supabase.from("website_leads").update({
+        routing_status: "failed",
+        routing_error: routingError.slice(0, 1_000),
+      }).eq("id", lead.id);
+    }
+  } else {
+    await supabase.from("website_leads").update({ routing_status: "not_applicable" }).eq("id", lead.id);
+  }
+
+  await supabase.from("analytics_events").insert({
+    event_type: "website_form_submitted",
+    metadata: { website_lead_id: lead.id, lead_type: leadType, is_test: isTest },
+  });
 
   if (canNotify) {
     const summary = Object.entries(details)
@@ -250,13 +451,10 @@ Deno.serve(async (request) => {
           html: `<h1>New ${escapeHtml(leadType)} inquiry</h1><p><strong>Name:</strong> ${escapeHtml(fullName)}</p><p><strong>Email:</strong> ${escapeHtml(email)}</p>${phone ? `<p><strong>Phone:</strong> ${escapeHtml(phone)}</p>` : ""}<ul>${summary}</ul>`,
         }),
       });
-      await supabase
-        .from("website_leads")
-        .update({
-          notification_status: emailResponse.ok ? "sent" : "failed",
-          notified_at: emailResponse.ok ? new Date().toISOString() : null,
-        })
-        .eq("id", lead.id);
+      await supabase.from("website_leads").update({
+        notification_status: emailResponse.ok ? "sent" : "failed",
+        notified_at: emailResponse.ok ? new Date().toISOString() : null,
+      }).eq("id", lead.id);
       if (!emailResponse.ok) console.error("website-intake Resend delivery failed", emailResponse.status);
     } catch (error) {
       console.error("website-intake notification failed", error);

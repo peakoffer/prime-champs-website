@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { Barlow_Condensed, IBM_Plex_Mono, Manrope } from "next/font/google";
 import "./globals.css";
+import { AnalyticsBridge } from "./components/AnalyticsBridge";
 import { productionUrl } from "./seo";
 
 const display = Barlow_Condensed({
@@ -22,15 +22,8 @@ const utility = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("host") || "www.prime-champs.com";
-  const protocol = host.includes("localhost") ? "http" : "https";
-  const origin = `${protocol}://${host}`;
-  const socialImage = `${origin}/og.png`;
-
-  return {
-    metadataBase: new URL(origin),
+export const metadata: Metadata = {
+  metadataBase: new URL(productionUrl),
     title: {
       default: "Prime Champs | Athlete Partnerships & Brand Campaigns",
       template: "%s | Prime Champs",
@@ -69,14 +62,14 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     openGraph: {
       type: "website",
-      url: origin,
+      url: productionUrl,
       siteName: "Prime Champs",
       title: "Prime Champs | Turn performance into momentum.",
       description:
         "Brand opportunities and partnership support for modern athletes.",
       images: [
         {
-          url: socialImage,
+          url: "/og.png",
           width: 1200,
           height: 630,
           alt: "Prime Champs — Turn performance into momentum.",
@@ -88,10 +81,9 @@ export async function generateMetadata(): Promise<Metadata> {
       title: "Prime Champs | Turn performance into momentum.",
       description:
         "Brand opportunities and partnership support for modern athletes.",
-      images: [socialImage],
+      images: ["/og.png"],
     },
-  };
-}
+};
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const organizationSchema = {
@@ -118,6 +110,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className={`${display.variable} ${body.variable} ${utility.variable}`}>
+        <AnalyticsBridge />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

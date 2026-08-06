@@ -27,11 +27,11 @@ export default function AthletesPage() {
             Apply once. We&apos;ll review your sport, story, audience, and goals.
             If there is a strong fit, we&apos;ll contact you.
           </p>
-          <a className="button-primary" href="/apply?type=athlete">
+          <a className="button-primary" href="/apply?type=athlete" data-track="cta_click" data-track-label="athletes_apply" data-track-location="hero">
             Apply now <span aria-hidden="true">↗</span>
           </a>
           <p className="hero-fine-print">
-            Following size isn&apos;t everything. Applying does not guarantee representation or a deal.
+            We review fit, readiness, and current opportunities—not follower count alone.
           </p>
         </div>
         <div className="subpage-hero-image">
@@ -78,7 +78,7 @@ export default function AthletesPage() {
             <span>Athletics</span><span>Volleyball</span><span>Hockey</span>
             <span>Action sports</span><span>Other sports</span>
           </div>
-          <a className="button-primary" href="/apply?type=athlete">Send your profile <span aria-hidden="true">↗</span></a>
+          <a className="button-primary" href="/apply?type=athlete" data-track="cta_click" data-track-label="athletes_send_profile" data-track-location="sports_section">Send your profile <span aria-hidden="true">↗</span></a>
         </div>
       </section>
 
@@ -95,10 +95,6 @@ export default function AthletesPage() {
           <details>
             <summary>Does applying guarantee representation?</summary>
             <p>No. We review every profile for fit and current capacity.</p>
-          </details>
-          <details>
-            <summary>Do you guarantee sponsorship income?</summary>
-            <p>No. We can pursue and manage opportunities, but no deal or income is guaranteed.</p>
           </details>
           <details>
             <summary>What happens next?</summary>

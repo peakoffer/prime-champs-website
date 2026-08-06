@@ -18,37 +18,9 @@ const fitDimensions = [
   ["05", "Commercial alignment", "Brand values, objective, creative role, budget, and whether both sides can build something credible."],
 ];
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "How does Prime Champs evaluate partnership fit?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Prime Champs reviews competitive credibility, audience quality, professional readiness, rights and timing, and commercial alignment before recommending a partnership.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "Does applying guarantee representation or sponsorship?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "No. An inquiry starts a review. Prime Champs does not guarantee representation, sponsorship, campaign performance, or income.",
-      },
-    },
-  ],
-};
-
 export default function ApproachPage() {
   return (
     <PageShell currentPath="/approach">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, "\\u003c") }}
-      />
-
       <section className="approach-hero">
         <div>
           <p className="eyebrow">The Prime Champs standard</p>
@@ -95,25 +67,25 @@ export default function ApproachPage() {
       <section className="claim-standard section-pad">
         <div>
           <p className="eyebrow dark">Professional standards</p>
-          <h2>Clear claims build better partnerships.</h2>
+          <h2>Clear expectations make better partnerships.</h2>
         </div>
         <div className="claim-grid">
           <article className="claim-yes">
-            <span>WE STAND BEHIND</span>
+            <span>BEFORE THE AGREEMENT</span>
             <ul>
-              <li>The services and recommendations we provide.</li>
-              <li>The communication and decisions we support.</li>
-              <li>The responsibilities and expectations agreed for each engagement.</li>
-              <li>Our legal business identity and direct contact information.</li>
+              <li>Deliverables and the athlete&apos;s creative role.</li>
+              <li>Compensation and payment timing.</li>
+              <li>Usage rights, category restrictions, and exclusivity.</li>
+              <li>The approval path and working deadlines.</li>
             </ul>
           </article>
           <article className="claim-no">
-            <span>WE VERIFY BEFORE PUBLISHING</span>
+            <span>THROUGH DELIVERY</span>
             <ul>
-              <li>Testimonials without the speaker&apos;s approval.</li>
-              <li>Client or partner logos without a documented relationship.</li>
-              <li>Campaign outcomes without a source and a clear measurement period.</li>
-              <li>Private deal terms or athlete information that should stay private.</li>
+              <li>Named points of contact on both sides.</li>
+              <li>Clear communication, approvals, and handoffs.</li>
+              <li>Progress against the agreed deliverables.</li>
+              <li>A closeout and a clear decision about what comes next.</li>
             </ul>
           </article>
         </div>

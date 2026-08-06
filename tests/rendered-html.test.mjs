@@ -38,6 +38,8 @@ test("server-renders the Prime Champs homepage", async () => {
   assert.match(html, /I&#x27;m a brand/);
   assert.match(html, /VisionWave Agency LLC/);
   assert.match(html, /No huge following required/i);
+  assert.match(html, /Support through the deal/i);
+  assert.doesNotMatch(html, /No deal guarantees/i);
   assert.match(html, /Apply once\. We take it from there\./i);
   assert.doesNotMatch(html, /300\+|research coverage|public client roster/i);
   assert.match(html, /application\/ld\+json/i);
@@ -66,6 +68,8 @@ test("renders every public route and the dual intake form", async () => {
   assert.match(formHtml, /Phone/);
   assert.match(formHtml, /privacy policy/);
   assert.match(formHtml, /Short athlete application/);
+  assert.match(formHtml, /We contact strong fits directly/);
+  assert.doesNotMatch(formHtml, /No representation or deal guarantee|No campaign guarantee/);
   assert.doesNotMatch(formHtml, /Total social following|Competitive highlights|Current or past sponsors/);
 
   const brandFormHtml = await (await render("/apply?type=brand")).text();
@@ -88,13 +92,17 @@ test("ships indexable SEO support files and unique page metadata", async () => {
   assert.match(assetHeaders, /Content-Type: application\/javascript; charset=utf-8/);
   assert.match(approachHtml, /Our Athlete–Brand Partnership Approach \| Prime Champs/);
   assert.match(brandHtml, /Athlete Marketing &amp; Brand Partnerships \| Prime Champs/);
-  assert.match(approachHtml, /FAQPage/);
+  assert.doesNotMatch(approachHtml, /FAQPage/);
+  assert.match(approachHtml, /Clear expectations make better partnerships/i);
+  assert.match(approachHtml, /Before the agreement/i);
+  assert.match(approachHtml, /Through delivery/i);
 });
 
-test("uses reliable native navigation and the current Supabase intake", async () => {
-  const [shell, applyForm] = await Promise.all([
+test("uses reliable native navigation, conversion tracking, and the current Supabase intake", async () => {
+  const [shell, applyForm, analyticsBridge] = await Promise.all([
     readFile(new URL("../app/components/SiteShell.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/ApplyForm.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/components/AnalyticsBridge.tsx", import.meta.url), "utf8"),
   ]);
 
   assert.doesNotMatch(shell, /next\/link|<Link/);
@@ -102,6 +110,40 @@ test("uses reliable native navigation and the current Supabase intake", async ()
   assert.match(applyForm, /rmxuwyxpoazsuqvdadlo\.supabase\.co\/functions\/v1\/website-intake/);
   assert.doesNotMatch(applyForm, /kfjzwbopdssfvyiyofws/);
   assert.doesNotMatch(applyForm, /Authorization:/);
+  assert.match(shell, /data-track=/);
+  assert.match(applyForm, /trackEvent\("form_submit_success"/);
+  assert.match(applyForm, /utm_source/);
+  assert.match(analyticsBridge, /prime-champs:conversion/);
+  assert.match(analyticsBridge, /dataLayer/);
+});
+
+test("ships static metadata and production security headers", async () => {
+  const [layout, nextConfig] = await Promise.all([
+    readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../next.config.ts", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(layout, /export const metadata: Metadata/);
+  assert.doesNotMatch(layout, /next\/headers|generateMetadata/);
+  assert.match(nextConfig, /poweredByHeader:\s*false/);
+  assert.match(nextConfig, /Content-Security-Policy/);
+  assert.match(nextConfig, /X-Content-Type-Options/);
+  assert.match(nextConfig, /Permissions-Policy/);
+});
+
+test("versions the Supabase website intake and CRM routing", async () => {
+  const [edgeFunction, migration] = await Promise.all([
+    readFile(new URL("../supabase/functions/website-intake/index.ts", import.meta.url), "utf8"),
+    readFile(new URL("../supabase/migrations/20260806234500_route_website_leads_to_crm.sql", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(edgeFunction, /instagram_handle.*career_goals/s);
+  assert.match(edgeFunction, /routeLeadToCrm/);
+  assert.match(edgeFunction, /website_form_submitted/);
+  assert.doesNotMatch(edgeFunction, /prime-champs-redesign\.zacattk1000\.chatgpt\.site/);
+  assert.match(migration, /crm_athlete_id/);
+  assert.match(migration, /routing_status/);
+  assert.match(migration, /website_leads_crm_athlete_id_idx/);
 });
 
 test("ships the final identity and credibility refinements", async () => {

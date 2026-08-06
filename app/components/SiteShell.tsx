@@ -8,7 +8,7 @@ const primaryLinks = [
 export function SiteHeader({ currentPath }: { currentPath?: string }) {
   const headerCta =
     currentPath === "/brands"
-      ? { href: "/apply?type=brand", label: "Start a brief" }
+      ? { href: "/apply?type=brand", label: "Start a campaign brief" }
       : currentPath === "/athletes" || currentPath === "/"
         ? { href: "/apply?type=athlete", label: "Apply now" }
         : { href: "/apply", label: "Apply / inquire" };
@@ -40,6 +40,9 @@ export function SiteHeader({ currentPath }: { currentPath?: string }) {
       <a
         className="header-cta"
         href={headerCta.href}
+        data-track="cta_click"
+        data-track-label="header_primary_cta"
+        data-track-location="header"
         aria-current={currentPath === "/apply" ? "page" : undefined}
       >
         {headerCta.label} <span aria-hidden="true">↗</span>
@@ -162,7 +165,7 @@ export function ArrowLink({
   inverse?: boolean;
 }) {
   return (
-    <a className={`text-link${inverse ? " light" : ""}`} href={href}>
+    <a className={`text-link${inverse ? " light" : ""}`} href={href} data-track="cta_click" data-track-label={href} data-track-location="text_link">
       {children} <span aria-hidden="true">↗</span>
     </a>
   );
