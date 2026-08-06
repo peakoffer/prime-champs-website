@@ -98,6 +98,12 @@ test("ships indexable SEO support files and unique page metadata", async () => {
   assert.match(approachHtml, /Through delivery/i);
 });
 
+test("brands every page title explicitly for the production Next runtime", async () => {
+  const seo = await readFile(new URL("../app/seo.ts", import.meta.url), "utf8");
+
+  assert.match(seo, /title:\s*\{\s*absolute:\s*`\$\{title\} \| Prime Champs`\s*\}/);
+});
+
 test("uses reliable native navigation, conversion tracking, and the current Supabase intake", async () => {
   const [shell, applyForm, analyticsBridge] = await Promise.all([
     readFile(new URL("../app/components/SiteShell.tsx", import.meta.url), "utf8"),

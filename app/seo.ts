@@ -16,7 +16,7 @@ export function pageMetadata({
   const canonical = `${productionUrl}${path === "/" ? "" : path}`;
 
   return {
-    title,
+    title: { absolute: `${title} | Prime Champs` },
     description,
     keywords,
     alternates: { canonical },
