@@ -90,7 +90,14 @@ export default function Home() {
         <div className="match-line" aria-label="Prime Champs partnership model">
           <span>ATHLETE</span>
           <i aria-hidden="true" />
-          <strong>PRIME CHAMPS</strong>
+          <span className="match-mark" aria-hidden="true">
+            <img
+              src="/brand/prime-champs-monogram-white.svg"
+              alt=""
+              width="1081"
+              height="597"
+            />
+          </span>
           <i aria-hidden="true" />
           <span>BRAND</span>
         </div>

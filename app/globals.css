@@ -113,7 +113,7 @@ h3 {
   height: 92px;
   padding: 0 var(--page-gutter);
   display: grid;
-  grid-template-columns: 280px 1fr auto;
+  grid-template-columns: 292px 1fr auto;
   align-items: center;
   gap: 32px;
   color: var(--white);
@@ -124,7 +124,7 @@ h3 {
 .brand-lockup {
   display: inline-flex;
   align-items: center;
-  width: 254px;
+  width: 268px;
   min-width: 0;
 }
 
@@ -465,9 +465,16 @@ h3 {
   letter-spacing: 0.12em;
 }
 
-.match-line strong {
-  color: var(--cyan);
-  font-weight: 600;
+.match-mark {
+  width: 102px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.match-mark img {
+  width: 100%;
+  height: auto;
 }
 
 .match-line i {
@@ -1680,6 +1687,18 @@ h3 {
   text-transform: uppercase;
 }
 
+.footer-signoff {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-signoff img {
+  width: 38px;
+  height: auto;
+  opacity: 0.64;
+}
+
 /* Evidence and trust */
 .proof-section {
   max-width: calc(var(--max-width) + (var(--page-gutter) * 2));
@@ -1957,11 +1976,11 @@ h3 {
 
 @media (max-width: 1180px) {
   .site-header {
-    grid-template-columns: 235px 1fr auto;
+    grid-template-columns: 248px 1fr auto;
   }
 
   .brand-lockup {
-    width: 220px;
+    width: 228px;
   }
 
   .home-hero,
@@ -2233,7 +2252,7 @@ h3 {
   }
 
   .brand-lockup {
-    width: 186px;
+    width: 194px;
   }
 
   .eyebrow {
@@ -2283,6 +2302,10 @@ h3 {
     gap: 10px;
     font-size: 0.52rem;
     letter-spacing: 0.06em;
+  }
+
+  .match-mark {
+    width: 82px;
   }
 
   .proof-intro,
@@ -2481,7 +2504,7 @@ h3 {
   }
 
   .brand-lockup {
-    width: 164px;
+    width: 172px;
   }
 
   .match-line {
@@ -2494,8 +2517,12 @@ h3 {
     justify-items: center;
   }
 
-  .match-line > :not(strong) {
+  .match-line > :not(.match-mark) {
     display: none;
+  }
+
+  .match-mark {
+    width: 78px;
   }
 
   .split-heading,
@@ -2564,16 +2591,6 @@ h3 {
 
   .hero-visual {
     min-height: 440px;
-  }
-
-  .match-line {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    gap: 8px;
-  }
-
-  .match-line i:first-of-type,
-  .match-line span:last-child {
-    display: none;
   }
 
   .proof-intro h2 {

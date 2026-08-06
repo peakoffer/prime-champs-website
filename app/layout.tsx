@@ -27,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const host = requestHeaders.get("host") || "www.prime-champs.com";
   const protocol = host.includes("localhost") ? "http" : "https";
   const origin = `${protocol}://${host}`;
-  const socialImage = `${origin}/og.jpg`;
+  const socialImage = `${origin}/og.png`;
 
   return {
     metadataBase: new URL(origin),
@@ -55,11 +55,12 @@ export async function generateMetadata(): Promise<Metadata> {
     manifest: "/site.webmanifest",
     icons: {
       icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
         { url: "/favicon.ico", sizes: "any" },
         { url: "/favicon.png", type: "image/png" },
       ],
       shortcut: "/favicon.ico",
-      apple: "/favicon.png",
+      apple: "/apple-touch-icon.png",
     },
     openGraph: {
       type: "website",
@@ -71,8 +72,8 @@ export async function generateMetadata(): Promise<Metadata> {
       images: [
         {
           url: socialImage,
-          width: 1731,
-          height: 909,
+          width: 1200,
+          height: 630,
           alt: "Prime Champs — Turn performance into pull.",
         },
       ],

@@ -10,10 +10,10 @@ export function SiteHeader({ currentPath }: { currentPath?: string }) {
     <header className="site-header">
       <a className="brand-lockup" href="/" aria-label="Prime Champs home">
         <img
-          src="/brand/prime-champs-wordmark-reversed.png"
+          src="/brand/prime-champs-wordmark-reversed.svg"
           alt="Prime Champs"
-          width="1236"
-          height="338"
+          width="1463"
+          height="390"
           fetchPriority="high"
         />
       </a>
@@ -77,10 +77,10 @@ export function SiteFooter() {
         <div className="footer-brand">
           <a className="footer-brand-lockup" href="/" aria-label="Prime Champs home">
             <img
-              src="/brand/prime-champs-wordmark-reversed.png"
+              src="/brand/prime-champs-wordmark-reversed.svg"
               alt="Prime Champs"
-              width="1236"
-              height="338"
+              width="1463"
+              height="390"
               loading="lazy"
               decoding="async"
             />
@@ -125,7 +125,17 @@ export function SiteFooter() {
 
       <div className="footer-bottom">
         <span>© 2026 Prime Champs</span>
-        <span>Built for the long game.</span>
+        <span className="footer-signoff">
+          <img
+            src="/brand/prime-champs-monogram-white.svg"
+            alt=""
+            width="1081"
+            height="597"
+            loading="lazy"
+            decoding="async"
+          />
+          Built for the long game.
+        </span>
       </div>
     </footer>
   );

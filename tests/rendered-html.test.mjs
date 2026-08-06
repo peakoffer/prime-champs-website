@@ -94,17 +94,20 @@ test("uses reliable native navigation and the current Supabase intake", async ()
 });
 
 test("ships the final identity and credibility refinements", async () => {
-  const [home, approach, brands, shell, styles] = await Promise.all([
+  const [home, approach, brands, shell, styles, seo] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/approach/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/brands/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/components/SiteShell.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+    readFile(new URL("../app/seo.ts", import.meta.url), "utf8"),
   ]);
 
   assert.doesNotMatch(home, /hero-mark|prime-champs-mark/);
-  assert.match(shell, /\/brand\/prime-champs-wordmark-reversed\.png/);
-  assert.match(shell, /width="1236"/);
+  assert.match(shell, /\/brand\/prime-champs-wordmark-reversed\.svg/);
+  assert.match(shell, /width="1463"/);
+  assert.match(home + shell, /\/brand\/prime-champs-monogram-white\.svg/);
+  assert.match(seo, /og\.png/);
   assert.doesNotMatch(styles, /\.brand-lockup img[\s\S]*?transform: scale\(2\.85\)/);
   assert.match(home, /fight-ring\.jpg/);
   assert.match(home, /surf-sunset-carve\.jpg/);

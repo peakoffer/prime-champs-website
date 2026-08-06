@@ -1,7 +1,14 @@
-# Prime Champs logo assets
+# Prime Champs identity assets
 
-Use `prime-champs-wordmark-reversed.png` on navy or photographic dark backgrounds.
-Use `prime-champs-wordmark-dark.png` on white or light backgrounds.
-Use `prime-champs-wordmark-white.png` when a one-color reversed mark is required.
+The 2026 identity is a clean vector redraw of the established forward-leaning
+Prime Champs wordmark. SVG is the preferred website and print format.
 
-The assets are tightly bounded transparent PNGs derived from the supplied Prime Champs artwork. Do not crop them, stretch them, add effects, or place them over visually busy image areas.
+- Use `prime-champs-wordmark-reversed.svg` on navy or photographic dark backgrounds.
+- Use `prime-champs-wordmark-dark.svg` on white or light backgrounds.
+- Use `prime-champs-monogram-blue.svg` when the full name will not remain legible.
+- Use `prime-champs-wordmark-black.svg` or `prime-champs-monogram-black.svg`
+  for approved one-color black applications.
+- PNG counterparts are included for systems that cannot accept SVG.
+
+Keep clear space around every mark, never crop the letters, and do not add
+shadows, gradients, outlines, bevels, or effects.
