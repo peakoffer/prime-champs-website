@@ -1,0 +1,11 @@
+/_next/static/css/*
+  Content-Type: text/css; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
+/_next/static/chunks/*
+  Content-Type: application/javascript; charset=utf-8
+  Cache-Control: public, max-age=31536000, immutable
+
+/_next/static/_vinext_fonts/*
+  Content-Type: font/woff2
+  Cache-Control: public, max-age=31536000, immutable

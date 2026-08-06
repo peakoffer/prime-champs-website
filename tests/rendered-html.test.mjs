@@ -63,15 +63,18 @@ test("renders every public route and the dual intake form", async () => {
 });
 
 test("ships indexable SEO support files and unique page metadata", async () => {
-  const [robots, sitemap, approachHtml, brandHtml] = await Promise.all([
+  const [robots, sitemap, assetHeaders, approachHtml, brandHtml] = await Promise.all([
     readFile(new URL("../public/robots.txt", import.meta.url), "utf8"),
     readFile(new URL("../public/sitemap.xml", import.meta.url), "utf8"),
+    readFile(new URL("../public/_headers", import.meta.url), "utf8"),
     render("/approach").then((response) => response.text()),
     render("/brands").then((response) => response.text()),
   ]);
 
   assert.match(robots, /Sitemap: https:\/\/www\.prime-champs\.com\/sitemap\.xml/);
   assert.match(sitemap, /https:\/\/www\.prime-champs\.com\/approach/);
+  assert.match(assetHeaders, /Content-Type: text\/css; charset=utf-8/);
+  assert.match(assetHeaders, /Content-Type: application\/javascript; charset=utf-8/);
   assert.match(approachHtml, /Our Athlete–Brand Partnership Approach \| Prime Champs/);
   assert.match(brandHtml, /Athlete Marketing &amp; Brand Partnerships \| Prime Champs/);
   assert.match(approachHtml, /FAQPage/);
