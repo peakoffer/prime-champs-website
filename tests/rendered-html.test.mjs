@@ -41,6 +41,10 @@ test("server-renders the Prime Champs homepage", async () => {
   assert.match(html, /Athlete context first/i);
   assert.doesNotMatch(html, /300\+|research coverage|public client roster/i);
   assert.match(html, /application\/ld\+json/i);
+  assert.match(
+    html,
+    /<meta name="facebook-domain-verification" content="bp4x2jjm9vk4t7nersc48k7aatsr39"\s*\/?>/i
+  );
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
   assert.equal(response.headers.get("x-frame-options"), "DENY");
   assert.match(response.headers.get("content-security-policy") ?? "", /frame-ancestors 'none'/);

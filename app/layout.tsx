@@ -41,6 +41,11 @@ export async function generateMetadata(): Promise<Metadata> {
     category: "Sports marketing",
     creator: "Prime Champs",
     publisher: "VisionWave Agency LLC",
+    verification: {
+      other: {
+        "facebook-domain-verification": "bp4x2jjm9vk4t7nersc48k7aatsr39",
+      },
+    },
     robots: {
       index: true,
       follow: true,
