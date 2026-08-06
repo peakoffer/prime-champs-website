@@ -46,7 +46,7 @@ const process = [
   },
   {
     number: "03",
-    title: "Make it compound",
+    title: "Build what comes next",
     copy: "We support execution, learn from the campaign, and look for the next credible chapter together.",
   },
 ];
@@ -62,9 +62,9 @@ export default function Home() {
             <span>into pull.</span>
           </h1>
           <p className="hero-deck">
-            Prime Champs connects athletes with brands and platforms, then
-            manages the work between the first conversation and a partnership
-            worth repeating.
+            Prime Champs helps athletes sharpen their commercial story, helps
+            brands find credible talent, and supports the partnership from
+            first fit through delivery.
           </p>
           <div className="button-row">
             <a className="button-primary" href="/athletes">
@@ -152,8 +152,8 @@ export default function Home() {
             <h2>More than the intro.</h2>
           </div>
           <p>
-            Prime Champs supports the commercial process—from opportunity
-            discovery and negotiations through campaign follow-through.
+            We support the work around a partnership—from finding the
+            opportunity and shaping the deal through campaign delivery.
           </p>
         </div>
 
@@ -170,20 +170,19 @@ export default function Home() {
 
       <section className="proof-section section-pad" aria-labelledby="proof-heading">
         <div className="proof-intro">
-          <p className="eyebrow dark">Built through relationships</p>
+          <p className="eyebrow dark">Built around the athlete</p>
           <h2 id="proof-heading">Athletes are people. Partnerships are personal.</h2>
           <p>
-            Prime Champs works directly with athletes across disciplines and
-            career stages. We learn the person, the competitive story, and the
-            commercial opportunity—then manage the details that turn mutual
-            interest into real work.
+            Prime Champs starts with the athlete—their goals, competitive
+            story, voice, and commercial potential—then builds outward toward
+            the right opportunity.
           </p>
           <ArrowLink href="/approach">See how we build partnerships</ArrowLink>
         </div>
         <div className="proof-ledger">
-          <article><span>DIRECT</span><strong>Athlete relationships first</strong><p>We work person-to-person—learning the athlete&apos;s goals, voice, schedule, existing obligations, and commercial direction.</p></article>
-          <article><span>CROSS-SPORT</span><strong>Experience across competitive cultures</strong><p>Combat sports, motorsports, surfing, athletics, volleyball, hockey, action sports, and adjacent fields.</p></article>
-          <article><span>FULL ARC</span><strong>From positioning through follow-through</strong><p>Strategy, introductions, negotiation, deliverables, communication, and the next credible chapter.</p></article>
+          <article><span>DIRECT</span><strong>Athlete context first</strong><p>We start with goals, voice, schedule, existing obligations, and direction before considering the right opportunity.</p></article>
+          <article><span>CROSS-SPORT</span><strong>A cross-sport point of view</strong><p>Our focus includes combat sports, motorsports, surfing, athletics, volleyball, hockey, action sports, and adjacent fields.</p></article>
+          <article><span>FULL ARC</span><strong>Built for the full partnership arc</strong><p>Positioning, introductions, negotiation, deliverables, communication, and the next credible chapter.</p></article>
         </div>
       </section>
 
@@ -192,7 +191,7 @@ export default function Home() {
           <p className="eyebrow dark">Built in sports culture</p>
           <h2>Competitive energy. Commercial clarity.</h2>
           <p>
-            Our network reaches across combat sports, motorsports, surfing,
+            Our focus spans combat sports, motorsports, surfing,
             athletics, volleyball, hockey, and action sports. The through-line
             is not category. It is conviction.
           </p>

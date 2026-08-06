@@ -65,12 +65,12 @@ export default function ApproachPage() {
 
       <section className="ledger-section section-pad" aria-labelledby="ledger-title">
         <div className="ledger-header">
-          <p className="eyebrow dark">Partnership work / end to end</p>
-          <h2 id="ledger-title">What serious representation looks like.</h2>
+          <p className="eyebrow dark">From first fit to follow-through</p>
+          <h2 id="ledger-title">What disciplined partnership work looks like.</h2>
           <p>
-            We combine direct relationship management with commercial discipline.
-            Every opportunity starts with context, moves through clear alignment,
-            and stays accountable through delivery.
+            Our approach combines personal context with commercial discipline.
+            Every opportunity starts with context, moves through clear
+            alignment, and stays accountable through delivery.
           </p>
         </div>
         <div className="ledger-grid">
@@ -101,8 +101,8 @@ export default function ApproachPage() {
           <article className="claim-yes">
             <span>WE STAND BEHIND</span>
             <ul>
-              <li>The services and commercial decisions we support.</li>
-              <li>The direct athlete and brand relationships we manage.</li>
+              <li>The services and recommendations we provide.</li>
+              <li>The communication and decisions we support.</li>
               <li>The responsibilities and expectations agreed for each engagement.</li>
               <li>Our legal business identity and direct contact information.</li>
             </ul>

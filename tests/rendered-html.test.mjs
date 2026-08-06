@@ -37,8 +37,8 @@ test("server-renders the Prime Champs homepage", async () => {
   assert.match(html, /I&#x27;m an athlete/);
   assert.match(html, /I represent a brand/);
   assert.match(html, /VisionWave Agency LLC/);
-  assert.match(html, /Built through relationships/i);
-  assert.match(html, /Athlete relationships first/i);
+  assert.match(html, /Built around the athlete/i);
+  assert.match(html, /Athlete context first/i);
   assert.doesNotMatch(html, /300\+|research coverage|public client roster/i);
   assert.match(html, /application\/ld\+json/i);
   assert.equal(response.headers.get("x-content-type-options"), "nosniff");
@@ -113,8 +113,8 @@ test("ships the final identity and credibility refinements", async () => {
   assert.match(home, /surf-sunset-carve\.jpg/);
   assert.doesNotMatch(home, /surf-wipeout\.jpg/);
   assert.doesNotMatch(home + approach + brands, /300\+|internal scouting|research coverage|public roster/i);
-  assert.match(approach, /What serious representation looks like/);
-  assert.match(brands, /Relationship-backed fit/);
+  assert.match(approach, /What disciplined partnership work looks like/);
+  assert.match(brands, /A fuller view of fit/);
 });
 
 test("removes all disposable starter artifacts", async () => {

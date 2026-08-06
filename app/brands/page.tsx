@@ -23,11 +23,11 @@ export default function BrandsPage() {
       <section className="subpage-hero brand-page-hero">
         <div className="subpage-hero-copy">
           <p className="eyebrow">Partnerships for ambitious brands</p>
-          <h1>Find the athlete your audience will believe.</h1>
+          <h1>Find the athlete your audience will believe in.</h1>
           <p>
             Prime Champs helps brands move from campaign objective to athlete
-            match, partnership structure, and activation—with one accountable
-            team between brief and delivery.
+            match, partnership structure, and activation—with clear support
+            from brief through delivery.
           </p>
           <a className="button-primary" href="/apply?type=brand">
             Start a campaign brief ↗
@@ -40,7 +40,7 @@ export default function BrandsPage() {
       </section>
 
       <section className="transparency-band">
-        <p><strong>Relationship-backed fit:</strong> We look beyond a talent list—combining athlete credibility, audience, professionalism, rights, timing, and the campaign objective.</p>
+        <p><strong>A fuller view of fit:</strong> We look beyond a talent list—combining athlete credibility, audience, professionalism, rights, timing, and the campaign objective.</p>
         <ArrowLink href="/approach">Review the qualification framework</ArrowLink>
       </section>
 
@@ -71,7 +71,7 @@ export default function BrandsPage() {
         </div>
         <div className="brand-value-copy">
           <p className="eyebrow">What brands get</p>
-          <h2>A better match—and fewer dropped handoffs.</h2>
+          <h2>A better match—and clearer execution.</h2>
           <ul className="check-list">
             <li><strong>Sharper talent briefs</strong><span>Audience, category, creative, timing, usage, and budget in one view.</span></li>
             <li><strong>Curated athlete fit</strong><span>A reasoned shortlist grounded in credibility and campaign reality.</span></li>

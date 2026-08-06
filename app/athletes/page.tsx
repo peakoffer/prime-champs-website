@@ -68,11 +68,10 @@ export default function AthletesPage() {
       <section className="sequence-section section-pad dark-section">
         <div className="sequence-heading">
           <p className="eyebrow">How it works</p>
-          <h2>Representation is a sequence, not a promise.</h2>
+          <h2>Good representation is built step by step.</h2>
           <p>
-            We use commercially reasonable efforts to create and manage
-            opportunities. No legitimate agency can guarantee a deal or a
-            specific income outcome.
+            We work to create and manage credible opportunities. No legitimate
+            agency can guarantee a deal or a specific income outcome.
           </p>
         </div>
         <div className="sequence-list">
@@ -99,7 +98,7 @@ export default function AthletesPage() {
           <div className="sports-tags">
             <span>Combat</span><span>Motorsports</span><span>Surf</span>
             <span>Athletics</span><span>Volleyball</span><span>Hockey</span>
-            <span>Action sports</span><span>Beyond</span>
+            <span>Action sports</span><span>Other disciplines</span>
           </div>
           <ArrowLink href="/apply?type=athlete">Share your athlete profile</ArrowLink>
         </div>

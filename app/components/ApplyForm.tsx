@@ -132,7 +132,7 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
         <p>
           {leadType === "athlete"
             ? "Share the essentials. We review sport, story, audience, goals, and commercial readiness—not follower count alone."
-            : "Tell us the audience, ambition, timeline, and budget. We’ll come back with a sharper athlete brief and next step."}
+            : "Tell us the audience, objective, timeline, and budget. We’ll review it against athlete fit, timing, and our current capacity."}
         </p>
         <ul className="form-expectations" aria-label="What happens next">
           <li>Direct review against current fit and capacity</li>

@@ -46,9 +46,9 @@ export default function AboutPage() {
             commercial alignment, and follow-through.
           </p>
           <p>
-            Prime Champs operates in that space between the two—supporting
-            introductions, consulting, deal development, sponsorship and
-            promotional activity, and the relationships that follow.
+            Prime Champs supports the work that connects the two: positioning,
+            introductions, deal development, campaign execution, and
+            follow-through.
           </p>
           <p className="company-note">
             Prime Champs is the registered trade name of VisionWave Agency LLC,
@@ -79,10 +79,10 @@ export default function AboutPage() {
 
       <section className="network-section section-pad">
         <div className="network-copy">
-          <p className="eyebrow dark">A cross-category network</p>
+          <p className="eyebrow dark">Across sports and categories</p>
           <h2>Different sports. Shared intensity.</h2>
           <p>
-            Our working network spans combat sports, motorsports, surfing,
+            Our focus spans combat sports, motorsports, surfing,
             athletics, volleyball, hockey, ball sports, and action sports. We
             stay open to any athlete whose credibility, community, and ambition
             create a real commercial story.
