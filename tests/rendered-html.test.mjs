@@ -130,4 +130,7 @@ test("removes all disposable starter artifacts", async () => {
   assert.doesNotMatch(packageJson, /react-loading-skeleton/);
 
   await assert.rejects(access(new URL("app/_sites-preview", projectRoot)));
+  await assert.rejects(access(new URL("../public/media/prime-champs-mark.png", import.meta.url)));
+  await assert.rejects(access(new URL("../public/media/prime-champs-wordmark.png", import.meta.url)));
+  await assert.rejects(access(new URL("../public/media/surf-wipeout.jpg", import.meta.url)));
 });
