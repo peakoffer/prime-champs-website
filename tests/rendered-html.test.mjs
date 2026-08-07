@@ -182,6 +182,7 @@ test("ships the final identity and credibility refinements", async () => {
   assert.match(styles, /\.standards-cta \.eyebrow[\s\S]*?color: var\(--white\)/);
   assert.match(styles, /@media \(max-width: 360px\)[\s\S]*?\.concise-athlete-hero \.subpage-hero-copy h1/);
   assert.match(brands, /surf-carve-clean-640\.webp 640w/);
+  assert.match(home, /fight-training-640\.webp 640w/);
   assert.match(styles, /@media \(max-width: 720px\)[\s\S]*?\.compact-sports-section\s*{[\s\S]*?grid-template-columns: minmax\(0, 1fr\)/);
   assert.doesNotMatch(styles, /mobile-sticky-apply/);
   assert.doesNotMatch(home + approach + brands, /300\+|internal scouting|research coverage|public roster/i);

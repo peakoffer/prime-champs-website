@@ -35,7 +35,16 @@ export default function AthletesPage() {
           </p>
         </div>
         <div className="subpage-hero-image">
-          <img src="/media/fight-training.webp" alt="Combat athlete training with a coach" width="1260" height="1549" fetchPriority="high" />
+          <img
+            src="/media/fight-training.webp"
+            srcSet="/media/fight-training-640.webp 640w, /media/fight-training-960.webp 960w, /media/fight-training.webp 1260w"
+            sizes="(max-width: 960px) calc(100vw - 40px), 48vw"
+            alt="Combat athlete training with a coach"
+            width="1260"
+            height="1549"
+            fetchPriority="high"
+            decoding="async"
+          />
           <div className="image-data-label"><span>FOCUS</span><strong>Sport × story × audience</strong></div>
         </div>
       </section>
