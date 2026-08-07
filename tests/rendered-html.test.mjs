@@ -66,7 +66,7 @@ test("renders every public route and the dual intake form", async () => {
   assert.match(formHtml, /Send my profile/);
   assert.match(formHtml, /Best social profile/);
   assert.match(formHtml, /Phone/);
-  assert.match(formHtml, /privacy policy/);
+  assert.match(formHtml, /privacy policy/i);
   assert.match(formHtml, /Short athlete application/);
   assert.match(formHtml, /We contact strong fits directly/);
   assert.doesNotMatch(formHtml, /No representation or deal guarantee|No campaign guarantee/);
@@ -168,9 +168,9 @@ test("ships the final identity and credibility refinements", async () => {
   assert.match(home + shell, /\/brand\/prime-champs-monogram-white\.svg/);
   assert.match(seo, /og\.png/);
   assert.doesNotMatch(styles, /\.brand-lockup img[\s\S]*?transform: scale\(2\.85\)/);
-  assert.match(home, /fight-ring\.jpg/);
-  assert.match(home, /surf-sunset-carve\.jpg/);
-  assert.match(home, /tennis-campaign\.jpg/);
+  assert.match(home, /fight-ring\.webp/);
+  assert.match(home, /surf-sunset-carve\.webp/);
+  assert.match(home, /tennis-campaign\.webp/);
   assert.doesNotMatch(home, /tennis-clean\.jpg/);
   assert.match(home, />TENNIS</);
   assert.doesNotMatch(home, /surf-wipeout\.jpg/);
@@ -178,6 +178,10 @@ test("ships the final identity and credibility refinements", async () => {
   assert.match(shell, /currentPath === "\/brands"/);
   assert.match(shell, /\/apply\?type=brand/);
   assert.match(styles, /\.athlete-cta-band \.button-primary[\s\S]*?color: var\(--white\)/);
+  assert.match(styles, /\.inline-cta \.eyebrow\.dark,[\s\S]*?color: var\(--ink\)/);
+  assert.match(styles, /\.standards-cta \.eyebrow[\s\S]*?color: var\(--white\)/);
+  assert.match(styles, /@media \(max-width: 360px\)[\s\S]*?\.concise-athlete-hero \.subpage-hero-copy h1/);
+  assert.match(brands, /surf-carve-clean-640\.webp 640w/);
   assert.match(styles, /@media \(max-width: 720px\)[\s\S]*?\.compact-sports-section\s*{[\s\S]*?grid-template-columns: minmax\(0, 1fr\)/);
   assert.doesNotMatch(styles, /mobile-sticky-apply/);
   assert.doesNotMatch(home + approach + brands, /300\+|internal scouting|research coverage|public roster/i);

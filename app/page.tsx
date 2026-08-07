@@ -72,11 +72,11 @@ export default function Home() {
 
         <div className="hero-visual" aria-label="Prime Champs athlete portfolio">
           <div className="hero-frame main-frame">
-            <img src="/media/fight-training.webp" alt="Combat athlete training in a gym" width="1260" height="1549" fetchPriority="high" />
+            <img src="/media/fight-training.webp" alt="Combat athlete training in a gym" width="1260" height="1549" fetchPriority="high" decoding="async" />
             <span>Combat / campaign ready</span>
           </div>
           <div className="hero-frame accent-frame">
-            <img src="/media/surf-aerial.webp" alt="Surfer launching above a wave" width="1260" height="2037" fetchPriority="high" />
+            <img src="/media/surf-aerial.webp" alt="Surfer launching above a wave" width="1260" height="2037" fetchPriority="low" decoding="async" />
             <span>Surf / global culture</span>
           </div>
         </div>

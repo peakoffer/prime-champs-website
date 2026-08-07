@@ -1231,6 +1231,11 @@ h3 {
   background: var(--cyan);
 }
 
+.inline-cta .eyebrow.dark,
+.athlete-cta-band .eyebrow.dark {
+  color: var(--ink);
+}
+
 .inline-cta h2 {
   max-width: 980px;
   margin-bottom: 0;
@@ -2046,6 +2051,10 @@ h3 {
   color: var(--white);
 }
 
+.standards-cta .eyebrow {
+  color: var(--white);
+}
+
 .standards-cta h2 {
   max-width: 900px;
   margin: 0;
@@ -2193,7 +2202,12 @@ h3 {
   .home-hero,
   .subpage-hero {
     min-height: auto;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .subpage-hero-copy,
+  .subpage-hero-image {
+    min-width: 0;
   }
 
   .home-hero {
@@ -3299,6 +3313,17 @@ h3 {
   .footer-grid-compact .footer-brand {
     grid-column: 1 / -1;
   }
+
+  .footer-grid > div:not(.footer-brand) > a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .form-submit-row p a {
+    display: inline-block;
+    padding-block: 13px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -3322,5 +3347,11 @@ h3 {
 
   .footer-grid-compact .footer-brand {
     grid-column: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .concise-athlete-hero .subpage-hero-copy h1 {
+    font-size: 15vw;
   }
 }

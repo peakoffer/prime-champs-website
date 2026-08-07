@@ -33,7 +33,16 @@ export default function BrandsPage() {
           </a>
         </div>
         <div className="subpage-hero-image brand-hero-image">
-          <img src="/media/surf-carve-clean.webp" alt="Surfer carving across a blue wave" width="1002" height="1570" fetchPriority="high" />
+          <img
+            src="/media/surf-carve-clean-1000.webp"
+            srcSet="/media/surf-carve-clean-640.webp 640w, /media/surf-carve-clean-1000.webp 1000w"
+            sizes="(max-width: 960px) calc(100vw - 40px), 48vw"
+            alt="Surfer carving across a blue wave"
+            width="1000"
+            height="1567"
+            fetchPriority="high"
+            decoding="async"
+          />
           <div className="image-data-label"><span>FILTER</span><strong>Credibility × audience</strong></div>
         </div>
       </section>
