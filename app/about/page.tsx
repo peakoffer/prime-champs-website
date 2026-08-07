@@ -91,10 +91,10 @@ export default function AboutPage() {
           </div>
         </div>
         <div className="about-standard-card" aria-label="Prime Champs operating standard">
-          <span>THE STANDARD</span>
-          <strong>Credible in sport.</strong>
-          <strong>Ready in business.</strong>
-          <strong>Clear on the work.</strong>
+          <span>THE STANDARD</span>{" "}
+          <strong>Credible in sport.</strong>{" "}
+          <strong>Ready in business.</strong>{" "}
+          <strong>Clear on the work.</strong>{" "}
           <p>That is the room we are building.</p>
         </div>
       </section>
