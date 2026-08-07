@@ -128,7 +128,6 @@ export function SiteFooter() {
             alt=""
             width="1081"
             height="597"
-            loading="lazy"
             decoding="async"
           />
           Built for the long game.

@@ -134,6 +134,64 @@ function normalizeSocialProfile(value: string) {
   }
 }
 
+function normalizeWebsiteUrl(value: string) {
+  try {
+    const url = new URL(value);
+    if (!["http:", "https:"].includes(url.protocol) || !url.hostname.includes(".")) return null;
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
+async function notificationExists(
+  supabase: SupabaseClient,
+  organizationId: string,
+  leadId: string,
+  type: string,
+) {
+  const { data, error } = await supabase
+    .from("activity_notifications")
+    .select("id")
+    .eq("organization_id", organizationId)
+    .eq("type", type)
+    .contains("metadata", { website_lead_id: leadId })
+    .limit(1)
+    .maybeSingle();
+  if (error) throw error;
+  return Boolean(data);
+}
+
+async function sendEmail(input: {
+  apiKey: string;
+  from: string;
+  to: string;
+  subject: string;
+  html: string;
+  idempotencyKey: string;
+  replyTo?: string;
+}) {
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${input.apiKey}`,
+      "Content-Type": "application/json",
+      "Idempotency-Key": input.idempotencyKey,
+    },
+    body: JSON.stringify({
+      from: input.from,
+      to: [input.to],
+      subject: input.subject,
+      html: input.html,
+      ...(input.replyTo ? { reply_to: input.replyTo } : {}),
+    }),
+  });
+  if (!response.ok) {
+    const body = await response.text().catch(() => "");
+    throw new Error(`Resend returned ${response.status}${body ? `: ${body.slice(0, 300)}` : ""}`);
+  }
+}
+
 async function routeLeadToCrm(
   supabase: SupabaseClient,
   lead: { id: string; lead_type: LeadType; full_name: string; email: string; phone: string | null },
@@ -150,32 +208,67 @@ async function routeLeadToCrm(
   }
 
   if (lead.lead_type === "brand") {
-    const { error: notificationError } = await supabase
-      .from("activity_notifications")
-      .insert({
-        organization_id: organization.id,
-        type: "website_brand_inquiry",
-        title: "New website brand inquiry",
-        message: `${lead.full_name} from ${details.company_name} submitted a campaign brief.`,
-        metadata: {
-          website_lead_id: lead.id,
-          email: lead.email,
-          phone: lead.phone,
-          company_name: details.company_name,
-          role: details.role,
-          campaign_goals: details.campaign_goals,
-          target_sports: details.target_sports,
-        },
-        link: "/",
-      });
-    if (notificationError) throw notificationError;
+    const opportunityPayload = {
+      organization_id: organization.id,
+      website_lead_id: lead.id,
+      company_name: details.company_name,
+      contact_name: lead.full_name,
+      contact_email: lead.email,
+      contact_phone: lead.phone,
+      contact_role: details.role ?? null,
+      company_website: details.company_website ?? null,
+      industry: details.industry ?? null,
+      target_sports: details.target_sports ?? null,
+      campaign_goals: details.campaign_goals ?? null,
+      target_audience: details.target_audience ?? null,
+      partnership_budget: details.partnership_budget ?? null,
+      partnership_timeline: details.partnership_timeline ?? null,
+    };
+    const { data: existingOpportunity, error: existingOpportunityError } = await supabase
+      .from("brand_opportunities")
+      .select("id")
+      .eq("website_lead_id", lead.id)
+      .maybeSingle();
+    if (existingOpportunityError) throw existingOpportunityError;
+
+    let opportunityId = existingOpportunity?.id ?? null;
+    if (opportunityId) {
+      const { error } = await supabase.from("brand_opportunities")
+        .update(opportunityPayload)
+        .eq("id", opportunityId);
+      if (error) throw error;
+    } else {
+      const { data, error } = await supabase.from("brand_opportunities")
+        .insert(opportunityPayload)
+        .select("id")
+        .single();
+      if (error || !data) throw error ?? new Error("Brand opportunity routing failed.");
+      opportunityId = data.id;
+    }
+
+    if (!await notificationExists(supabase, organization.id, lead.id, "website_brand_inquiry")) {
+      const { error: notificationError } = await supabase
+        .from("activity_notifications")
+        .insert({
+          organization_id: organization.id,
+          type: "website_brand_inquiry",
+          title: "New website brand brief",
+          message: `${lead.full_name} from ${details.company_name} submitted a campaign brief.`,
+          metadata: { website_lead_id: lead.id, brand_opportunity_id: opportunityId },
+          link: `/brand-opportunities#${opportunityId}`,
+        });
+      if (notificationError) throw notificationError;
+    }
 
     const { error: routeUpdateError } = await supabase
       .from("website_leads")
       .update({
         organization_id: organization.id,
+        brand_opportunity_id: opportunityId,
         routing_status: "routed",
+        routing_error: null,
         routed_at: new Date().toISOString(),
+        next_routing_attempt_at: null,
       })
       .eq("id", lead.id);
     if (routeUpdateError) throw routeUpdateError;
@@ -183,11 +276,11 @@ async function routeLeadToCrm(
   }
 
   const social = normalizeSocialProfile(details.instagram_handle);
-  let existingAthlete: { id: string } | null = null;
+  let existingAthlete: { id: string; notes: string | null; phone: string | null; sport: string } | null = null;
 
   const { data: emailMatch } = await supabase
     .from("athletes")
-    .select("id")
+    .select("id,notes,phone,sport")
     .eq("organization_id", organization.id)
     .eq("email", lead.email)
     .limit(1)
@@ -197,7 +290,7 @@ async function routeLeadToCrm(
   if (!existingAthlete && social.instagram_handle) {
     const { data: handleMatch } = await supabase
       .from("athletes")
-      .select("id")
+      .select("id,notes,phone,sport")
       .eq("organization_id", organization.id)
       .eq("instagram_handle", social.instagram_handle)
       .limit(1)
@@ -222,6 +315,7 @@ async function routeLeadToCrm(
         name: lead.full_name,
         sport: details.primary_sport,
         email: lead.email,
+        phone: lead.phone,
         ...social,
         notes,
         source: "manual",
@@ -232,20 +326,45 @@ async function routeLeadToCrm(
       .single();
     if (athleteError || !athlete) throw athleteError ?? new Error("Athlete routing failed.");
     athleteId = athlete.id;
+  } else {
+    const applicationNote = [
+      `Inbound website application (${new Date().toISOString().slice(0, 10)}).`,
+      `Competitive level: ${details.experience_level}`,
+      `Goals: ${details.career_goals}`,
+      `Website lead: ${lead.id}`,
+    ].join("\n");
+    const notes = existingAthlete?.notes?.includes(`Website lead: ${lead.id}`)
+      ? existingAthlete.notes
+      : [existingAthlete?.notes, applicationNote].filter(Boolean).join("\n\n");
+    const { error: athleteUpdateError } = await supabase
+      .from("athletes")
+      .update({
+        name: lead.full_name,
+        email: lead.email,
+        phone: lead.phone ?? existingAthlete?.phone ?? null,
+        sport: details.primary_sport ?? existingAthlete?.sport,
+        ...social,
+        notes,
+      })
+      .eq("id", athleteId)
+      .eq("organization_id", organization.id);
+    if (athleteUpdateError) throw athleteUpdateError;
   }
 
-  const { error: notificationError } = await supabase
-    .from("activity_notifications")
-    .insert({
-      organization_id: organization.id,
-      athlete_id: athleteId,
-      type: "website_athlete_application",
-      title: "New website athlete application",
-      message: `${lead.full_name} applied through prime-champs.com.`,
-      metadata: { website_lead_id: lead.id, matched_existing: Boolean(existingAthlete) },
-      link: `/athletes/${athleteId}`,
-    });
-  if (notificationError) console.error("Website lead notification failed", notificationError.message);
+  if (!await notificationExists(supabase, organization.id, lead.id, "website_athlete_application")) {
+    const { error: notificationError } = await supabase
+      .from("activity_notifications")
+      .insert({
+        organization_id: organization.id,
+        athlete_id: athleteId,
+        type: "website_athlete_application",
+        title: existingAthlete ? "Repeat website athlete application" : "New website athlete application",
+        message: `${lead.full_name} applied through prime-champs.com.`,
+        metadata: { website_lead_id: lead.id, matched_existing: Boolean(existingAthlete) },
+        link: `/athletes/${athleteId}`,
+      });
+    if (notificationError) console.error("Website lead notification failed", notificationError.message);
+  }
 
   const { error: routeUpdateError } = await supabase
     .from("website_leads")
@@ -253,7 +372,9 @@ async function routeLeadToCrm(
       organization_id: organization.id,
       crm_athlete_id: athleteId,
       routing_status: "routed",
+      routing_error: null,
       routed_at: new Date().toISOString(),
+      next_routing_attempt_at: null,
     })
     .eq("id", lead.id);
   if (routeUpdateError) throw routeUpdateError;
@@ -303,15 +424,34 @@ Deno.serve(async (request) => {
   const supabase = createClient(supabaseUrl, secretKey, {
     auth: { persistSession: false, autoRefreshToken: false },
   });
+  const ip = clean(
+    request.headers.get("cf-connecting-ip") ??
+      request.headers.get("x-forwarded-for")?.split(",")[0] ?? "",
+    100,
+  );
+  const ipHash = ip ? await sha256(ip) : null;
 
   const eventType = clean(input.event_type, 64);
   if (eventType) {
     if (!allowedEvents.has(eventType)) {
       return respond(origin, { error: "Unknown event type." }, 400);
     }
+    if (ipHash) {
+      const oneMinuteAgo = new Date(Date.now() - 60_000).toISOString();
+      const { count, error: rateError } = await supabase
+        .from("analytics_events")
+        .select("id", { count: "exact", head: true })
+        .like("event_type", "website_%")
+        .eq("metadata->>ip_hash", ipHash)
+        .gte("created_at", oneMinuteAgo);
+      if (rateError) console.error("website-intake event rate check failed", rateError.message);
+      if (!rateError && (count ?? 0) >= 120) {
+        return respond(origin, { error: "Too many recent events." }, 429);
+      }
+    }
     const { error: eventError } = await supabase.from("analytics_events").insert({
       event_type: `website_${eventType}`,
-      metadata: cleanEventData(input.event_data),
+      metadata: { ...cleanEventData(input.event_data), ip_hash: ipHash },
     });
     if (eventError) {
       console.error("website-intake event insert failed", eventError.message);
@@ -345,6 +485,12 @@ Deno.serve(async (request) => {
     if (value) details[field] = value;
   }
 
+  if (details.company_website) {
+    const website = normalizeWebsiteUrl(details.company_website);
+    if (!website) return respond(origin, { error: "Enter a valid company website URL." }, 400);
+    details.company_website = website;
+  }
+
   const requiredFields = leadType === "athlete"
     ? ["primary_sport", "experience_level", "instagram_handle", "career_goals"]
     : ["company_name", "role", "target_sports", "campaign_goals"];
@@ -352,15 +498,7 @@ Deno.serve(async (request) => {
     return respond(origin, { error: "Complete the required inquiry fields." }, 400);
   }
 
-  const ip = clean(
-    request.headers.get("cf-connecting-ip") ??
-      request.headers.get("x-forwarded-for")?.split(",")[0] ?? "",
-    100,
-  );
-  const [emailHash, ipHash] = await Promise.all([
-    sha256(email),
-    ip ? sha256(ip) : Promise.resolve(null),
-  ]);
+  const emailHash = await sha256(email);
 
   const oneHourAgo = new Date(Date.now() - 60 * 60 * 1_000).toISOString();
   const rateFilters = [`email_hash.eq.${emailHash}`];
@@ -383,7 +521,7 @@ Deno.serve(async (request) => {
   const resendKey = Deno.env.get("RESEND_API_KEY");
   const resendFrom = Deno.env.get("RESEND_FROM_EMAIL");
   const notifyTo = Deno.env.get("LEAD_NOTIFICATION_EMAIL") ?? "info@prime-champs.com";
-  const canNotify = Boolean(resendKey && resendFrom && !isTest);
+  const canEmail = Boolean(resendKey && resendFrom && !isTest);
 
   const { data: lead, error: insertError } = await supabase
     .from("website_leads")
@@ -401,7 +539,8 @@ Deno.serve(async (request) => {
       user_agent: clean(request.headers.get("user-agent"), 500),
       ip_hash: ipHash,
       email_hash: emailHash,
-      notification_status: isTest ? "suppressed" : canNotify ? "pending" : "not_configured",
+      notification_status: isTest ? "suppressed" : canEmail ? "pending" : "not_configured",
+      confirmation_status: isTest ? "suppressed" : canEmail ? "pending" : "not_configured",
       is_test: isTest,
     })
     .select("id,lead_type,full_name,email,phone")
@@ -413,14 +552,27 @@ Deno.serve(async (request) => {
   }
 
   if (!isTest) {
-    try {
-      await routeLeadToCrm(supabase, lead, details);
-    } catch (error) {
-      const routingError = error instanceof Error ? error.message : "Unknown routing error";
-      console.error("website-intake CRM routing failed", routingError);
+    let routingError: string | null = null;
+    for (let attempt = 1; attempt <= 2; attempt += 1) {
+      await supabase.from("website_leads").update({
+        routing_attempts: attempt,
+        last_routing_attempt_at: new Date().toISOString(),
+      }).eq("id", lead.id);
+      try {
+        await routeLeadToCrm(supabase, lead, details);
+        routingError = null;
+        break;
+      } catch (error) {
+        routingError = error instanceof Error ? error.message : "Unknown routing error";
+        console.error(`website-intake CRM routing attempt ${attempt} failed`, routingError);
+        if (attempt < 2) await new Promise((resolve) => setTimeout(resolve, 250));
+      }
+    }
+    if (routingError) {
       await supabase.from("website_leads").update({
         routing_status: "failed",
         routing_error: routingError.slice(0, 1_000),
+        next_routing_attempt_at: new Date(Date.now() + 15 * 60_000).toISOString(),
       }).eq("id", lead.id);
     }
   } else {
@@ -432,35 +584,60 @@ Deno.serve(async (request) => {
     metadata: { website_lead_id: lead.id, lead_type: leadType, is_test: isTest },
   });
 
-  if (canNotify) {
+  let confirmationSent = false;
+  if (canEmail && resendKey && resendFrom) {
     const summary = Object.entries(details)
       .map(([key, value]) => `<li><strong>${escapeHtml(key.replaceAll("_", " "))}:</strong> ${escapeHtml(value)}</li>`)
       .join("");
     try {
-      const emailResponse = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${resendKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: resendFrom,
-          to: [notifyTo],
-          reply_to: email,
-          subject: `New Prime Champs ${leadType} inquiry — ${fullName}`,
-          html: `<h1>New ${escapeHtml(leadType)} inquiry</h1><p><strong>Name:</strong> ${escapeHtml(fullName)}</p><p><strong>Email:</strong> ${escapeHtml(email)}</p>${phone ? `<p><strong>Phone:</strong> ${escapeHtml(phone)}</p>` : ""}<ul>${summary}</ul>`,
-        }),
+      await sendEmail({
+        apiKey: resendKey,
+        from: resendFrom,
+        to: notifyTo,
+        replyTo: email,
+        idempotencyKey: `website-lead-internal-${lead.id}`,
+        subject: `New Prime Champs ${leadType} inquiry — ${fullName}`,
+        html: `<h1>New ${escapeHtml(leadType)} inquiry</h1><p><strong>Name:</strong> ${escapeHtml(fullName)}</p><p><strong>Email:</strong> ${escapeHtml(email)}</p>${phone ? `<p><strong>Phone:</strong> ${escapeHtml(phone)}</p>` : ""}<ul>${summary}</ul>`,
       });
       await supabase.from("website_leads").update({
-        notification_status: emailResponse.ok ? "sent" : "failed",
-        notified_at: emailResponse.ok ? new Date().toISOString() : null,
+        notification_status: "sent",
+        notification_error: null,
+        notified_at: new Date().toISOString(),
       }).eq("id", lead.id);
-      if (!emailResponse.ok) console.error("website-intake Resend delivery failed", emailResponse.status);
     } catch (error) {
       console.error("website-intake notification failed", error);
-      await supabase.from("website_leads").update({ notification_status: "failed" }).eq("id", lead.id);
+      await supabase.from("website_leads").update({
+        notification_status: "failed",
+        notification_error: (error instanceof Error ? error.message : "Unknown notification error").slice(0, 1_000),
+      }).eq("id", lead.id);
+    }
+
+    const confirmationIntro = leadType === "athlete"
+      ? "Your athlete profile is now in our direct review queue. If there is a strong fit and a clear next step, Prime Champs will contact you by email."
+      : "Your campaign brief is now in our review queue. We will review the objective, timing, and athlete fit, then follow up by email.";
+    try {
+      await sendEmail({
+        apiKey: resendKey,
+        from: resendFrom,
+        to: email,
+        idempotencyKey: `website-lead-confirmation-${lead.id}`,
+        subject: leadType === "athlete" ? "Prime Champs received your athlete profile" : "Prime Champs received your campaign brief",
+        html: `<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;color:#121826"><p style="font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#2161ff">Prime Champs</p><h1 style="font-size:28px">We received it, ${escapeHtml(fullName)}.</h1><p style="line-height:1.6">${confirmationIntro}</p><p style="line-height:1.6">No extra action is needed right now.</p><p style="margin-top:32px;color:#596273">Prime Champs<br>Two sides. One standard.</p></div>`,
+      });
+      confirmationSent = true;
+      await supabase.from("website_leads").update({
+        confirmation_status: "sent",
+        confirmation_error: null,
+        confirmed_at: new Date().toISOString(),
+      }).eq("id", lead.id);
+    } catch (error) {
+      console.error("website-intake confirmation failed", error);
+      await supabase.from("website_leads").update({
+        confirmation_status: "failed",
+        confirmation_error: (error instanceof Error ? error.message : "Unknown confirmation error").slice(0, 1_000),
+      }).eq("id", lead.id);
     }
   }
 
-  return respond(origin, { ok: true }, 201);
+  return respond(origin, { ok: true, confirmation_sent: confirmationSent }, 201);
 });

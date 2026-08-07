@@ -35,7 +35,7 @@ export default function AthletesPage() {
           </p>
         </div>
         <div className="subpage-hero-image">
-          <img src="/media/fight-training.jpg" alt="Combat athlete training with a coach" width="1260" height="1549" fetchPriority="high" />
+          <img src="/media/fight-training.webp" alt="Combat athlete training with a coach" width="1260" height="1549" fetchPriority="high" />
           <div className="image-data-label"><span>FOCUS</span><strong>Sport × story × audience</strong></div>
         </div>
       </section>
@@ -64,7 +64,7 @@ export default function AthletesPage() {
 
       <section className="sports-section compact-sports-section section-pad">
         <div className="sports-image">
-          <img src="/media/surf-camera.jpg" alt="Surfer launching above a wave during a filmed session" width="1260" height="1853" loading="lazy" decoding="async" />
+          <img src="/media/surf-camera.webp" alt="Surfer launching above a wave during a filmed session" width="1260" height="1853" loading="lazy" decoding="async" />
         </div>
         <div className="sports-copy">
           <p className="eyebrow dark">Who can apply</p>
@@ -93,12 +93,8 @@ export default function AthletesPage() {
             <p>No. Your sport, story, audience quality, momentum, and professionalism all matter.</p>
           </details>
           <details>
-            <summary>Does applying guarantee representation?</summary>
-            <p>No. We review every profile for fit and current capacity.</p>
-          </details>
-          <details>
             <summary>What happens next?</summary>
-            <p>If we see a strong next step, we&apos;ll contact you directly.</p>
+            <p>We review every profile. If there is a strong fit and a clear next step, we&apos;ll contact you directly.</p>
           </details>
         </div>
       </section>

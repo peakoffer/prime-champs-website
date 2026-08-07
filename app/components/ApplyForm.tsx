@@ -97,6 +97,7 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
 
       const result = (await response.json().catch(() => ({}))) as {
         error?: string;
+        confirmation_sent?: boolean;
       };
 
       if (!response.ok || result.error) {
@@ -113,8 +114,8 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
       trackEvent("form_submit_success", { lead_type: leadType });
       setMessage(
         leadType === "athlete"
-          ? "Your athlete profile is in. We’ll review the fit and follow up by email."
-          : "Your campaign brief is in. We’ll review it and follow up by email."
+          ? `Your athlete profile is in.${result.confirmation_sent ? " Check your email for a copy." : " We’ll review the fit and follow up by email."}`
+          : `Your campaign brief is in.${result.confirmation_sent ? " Check your email for a copy." : " We’ll review it and follow up by email."}`
       );
     } catch (error) {
       setStatus("error");
@@ -200,8 +201,9 @@ export function ApplyForm({ initialType = "athlete" }: { initialType?: LeadType 
               {status === "submitting" ? "Sending…" : leadType === "athlete" ? "Send my profile ↗" : "Send campaign brief ↗"}
             </button>
             <p>
-              By sending this form, you agree to our{" "}
-              <a href="/privacy">privacy policy</a>.
+              By sending this form, you acknowledge our{" "}
+              <a href="/privacy">Privacy Policy</a> and{" "}
+              <a href="/terms">Website Terms</a>.
             </p>
           </div>
 
@@ -294,7 +296,13 @@ function BrandFields() {
       <div className="field-grid two">
         <label>
           Company website
-          <input name="company_website" placeholder="yourbrand.com" inputMode="url" />
+          <input
+            name="company_website"
+            type="url"
+            placeholder="https://yourbrand.com"
+            inputMode="url"
+            autoComplete="url"
+          />
         </label>
         <label>
           Industry <small>Optional</small>

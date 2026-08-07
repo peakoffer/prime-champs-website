@@ -11,11 +11,9 @@ export const metadata: Metadata = pageMetadata({
 });
 
 const fitDimensions = [
-  ["01", "Competitive credibility", "Performance context, discipline, momentum, and the authority the athlete carries inside the sport."],
-  ["02", "Audience quality", "Who pays attention, why they care, and whether the relationship is strong enough to support the campaign idea."],
-  ["03", "Professional readiness", "Responsiveness, reliability, content capability, existing obligations, and readiness to deliver."],
-  ["04", "Rights and timing", "Category conflicts, usage expectations, schedule, geography, and the practical limits around the opportunity."],
-  ["05", "Commercial alignment", "Brand values, objective, creative role, budget, and whether both sides can build something credible."],
+  ["01", "Credibility and audience", "Performance, story, momentum, and the reason a community pays attention."],
+  ["02", "Professional readiness", "Responsiveness, content capability, obligations, and the ability to deliver well."],
+  ["03", "Commercial reality", "Brand alignment, rights, timing, creative role, and budget in one practical view."],
 ];
 
 export default function ApproachPage() {
@@ -52,9 +50,9 @@ export default function ApproachPage() {
         </div>
       </section>
 
-      <section className="fit-section section-pad dark-section">
+      <section className="fit-section compact-fit-section section-pad dark-section">
         <div className="section-heading split-heading light-heading">
-          <div><p className="eyebrow">The fit screen</p><h2>Five questions before the pitch.</h2></div>
+          <div><p className="eyebrow">The fit screen</p><h2>Three filters before the pitch.</h2></div>
           <p>Follower count can inform a decision. It cannot carry one. Each opportunity has to survive a more complete commercial review.</p>
         </div>
         <div className="fit-list">

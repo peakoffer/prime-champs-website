@@ -1020,7 +1020,10 @@ h3 {
 
 .faq-list summary {
   position: relative;
+  min-height: 44px;
   padding-right: 44px;
+  display: flex;
+  align-items: center;
   list-style: none;
   cursor: pointer;
   font-family: var(--font-display), sans-serif;
@@ -1173,10 +1176,25 @@ h3 {
   text-transform: uppercase;
 }
 
+.brand-process-head > p {
+  max-width: 620px;
+  margin: 0;
+  color: var(--muted);
+}
+
 .brand-process-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-top: 1px solid var(--line-light);
+}
+
+.three-column-process {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.compact-brand-process {
+  padding-top: clamp(72px, 8vw, 112px);
+  padding-bottom: clamp(72px, 8vw, 112px);
 }
 
 .brand-process-grid article {
@@ -1303,6 +1321,10 @@ h3 {
   border-top: 1px solid var(--line-dark);
 }
 
+.three-principles {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .principle-grid article {
   min-height: 310px;
   padding: 28px;
@@ -1337,6 +1359,69 @@ h3 {
   grid-template-columns: minmax(320px, 0.66fr) minmax(620px, 1.34fr);
   gap: clamp(60px, 8vw, 130px);
   align-items: center;
+}
+
+.compact-network-section {
+  grid-template-columns: minmax(320px, 0.9fr) minmax(500px, 1.1fr);
+  padding-top: clamp(78px, 8vw, 118px);
+  padding-bottom: clamp(78px, 8vw, 118px);
+}
+
+.about-sports-tags {
+  margin-bottom: 0;
+}
+
+.about-standard-card {
+  position: relative;
+  min-height: 470px;
+  padding: clamp(34px, 5vw, 70px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(61, 230, 239, 0.12), transparent 45%),
+    var(--ink);
+  color: var(--white);
+  clip-path: polygon(0 0, 92% 0, 100% 12%, 100% 100%, 8% 100%, 0 88%);
+}
+
+.about-standard-card::before {
+  content: "PC";
+  position: absolute;
+  top: -0.18em;
+  right: -0.02em;
+  color: rgba(255, 255, 255, 0.045);
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(12rem, 24vw, 24rem);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.about-standard-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.about-standard-card span {
+  margin-bottom: 48px;
+  color: var(--cyan);
+  font-family: var(--font-utility), monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+}
+
+.about-standard-card strong {
+  display: block;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.3rem, 4.7vw, 4.8rem);
+  line-height: 0.93;
+  text-transform: uppercase;
+}
+
+.about-standard-card p {
+  margin: 28px 0 0;
+  color: var(--chrome);
 }
 
 .network-images {
@@ -1905,6 +1990,15 @@ h3 {
 .fit-list h3 { margin: 0; font-size: 2rem; text-transform: uppercase; }
 .fit-list p { margin: 0; color: var(--chrome); }
 
+.compact-fit-section {
+  padding-top: clamp(78px, 8vw, 116px);
+  padding-bottom: clamp(78px, 8vw, 116px);
+}
+
+.compact-fit-section .fit-list article {
+  min-height: 0;
+}
+
 .claim-standard {
   max-width: calc(var(--max-width) + (var(--page-gutter) * 2));
   margin: 0 auto;
@@ -2038,7 +2132,7 @@ h3 {
 
   .mobile-nav summary {
     min-width: 92px;
-    min-height: 42px;
+    min-height: 44px;
     padding: 0 14px;
     display: flex;
     align-items: center;
@@ -2169,6 +2263,25 @@ h3 {
   .brand-process-grid,
   .principle-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .three-column-process,
+  .three-principles {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .three-column-process article:nth-child(2),
+  .three-principles article:nth-child(2) {
+    border-right: 1px solid var(--line-light);
+  }
+
+  .three-principles article:nth-child(2) {
+    border-right-color: var(--line-dark);
+  }
+
+  .three-column-process article:nth-child(n + 3),
+  .three-principles article:nth-child(n + 3) {
+    border-top: 0;
   }
 
   .brand-process-grid article:nth-child(2),
@@ -2426,6 +2539,11 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .three-column-process,
+  .three-principles {
+    grid-template-columns: 1fr;
+  }
+
   .brand-process-grid article,
   .brand-process-grid article + article,
   .principle-grid article,
@@ -2446,6 +2564,10 @@ h3 {
   .brand-process-grid h3,
   .principle-grid h3 {
     margin-top: 70px;
+  }
+
+  .about-standard-card {
+    min-height: 390px;
   }
 
   .about-hero,
@@ -2510,6 +2632,11 @@ h3 {
 
   .brand-lockup {
     width: 172px;
+  }
+
+  .about-standard-card {
+    min-height: 360px;
+    clip-path: polygon(0 0, 90% 0, 100% 8%, 100% 100%, 10% 100%, 0 92%);
   }
 
   .match-line {

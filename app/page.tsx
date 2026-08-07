@@ -53,7 +53,7 @@ export default function Home() {
         <div className="hero-copy">
           <p className="eyebrow">Brand opportunities for athletes</p>
           <h1>
-            Turn performance
+            Turn performance{" "}
             <span>into momentum.</span>
           </h1>
           <p className="hero-deck">
@@ -72,11 +72,11 @@ export default function Home() {
 
         <div className="hero-visual" aria-label="Prime Champs athlete portfolio">
           <div className="hero-frame main-frame">
-            <img src="/media/fight-training.jpg" alt="Combat athlete training in a gym" width="1260" height="1549" fetchPriority="high" />
+            <img src="/media/fight-training.webp" alt="Combat athlete training in a gym" width="1260" height="1549" fetchPriority="high" />
             <span>Combat / campaign ready</span>
           </div>
           <div className="hero-frame accent-frame">
-            <img src="/media/surf-aerial.jpg" alt="Surfer launching above a wave" width="1260" height="2037" fetchPriority="high" />
+            <img src="/media/surf-aerial.webp" alt="Surfer launching above a wave" width="1260" height="2037" fetchPriority="high" />
             <span>Surf / global culture</span>
           </div>
         </div>
@@ -107,15 +107,15 @@ export default function Home() {
 
         <div className="visual-sport-strip" aria-label="Athletes across sports culture">
           <figure>
-            <img src="/media/fight-ring.jpg" alt="Combat athletes competing in a ring" width="1260" height="1279" loading="lazy" decoding="async" />
+            <img src="/media/fight-ring.webp" alt="Combat athletes competing in a ring" width="1260" height="1279" loading="lazy" decoding="async" />
             <figcaption>COMBAT</figcaption>
           </figure>
           <figure>
-            <img src="/media/surf-sunset-carve.jpg" alt="Surfer carving across a wave at sunset" width="1260" height="1623" loading="lazy" decoding="async" />
+            <img src="/media/surf-sunset-carve.webp" alt="Surfer carving across a wave at sunset" width="1260" height="1623" loading="lazy" decoding="async" />
             <figcaption>SURF</figcaption>
           </figure>
           <figure>
-            <img src="/media/tennis-campaign.jpg" alt="Tennis ball with Prime Champs campaign branding" width="825" height="1024" loading="lazy" decoding="async" />
+            <img src="/media/tennis-campaign.webp" alt="Tennis ball with Prime Champs campaign branding" width="825" height="1024" loading="lazy" decoding="async" />
             <figcaption>TENNIS</figcaption>
           </figure>
         </div>

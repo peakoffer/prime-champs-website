@@ -10,11 +10,10 @@ export const metadata: Metadata = pageMetadata({
   keywords: ["Prime Champs agency", "VisionWave Agency LLC", "sports marketing company", "athlete partnership agency"],
 });
 
-const principles = [
-  ["FIT", "A partnership needs a reason to exist beyond reach."],
-  ["CLARITY", "Athletes and brands should understand the work, terms, and expectations."],
-  ["MOMENTUM", "The best deal strengthens the next chapter instead of borrowing from it."],
-  ["RESPECT", "Competitive careers and brand reputations both deserve disciplined representation."],
+const operatingModel = [
+  ["DIRECT REVIEW", "Every athlete profile and brand brief is reviewed by Prime Champs—not passed through a volume intake queue."],
+  ["ONE THROUGH-LINE", "The context gathered at the start stays attached to the introduction, terms, campaign, and follow-through."],
+  ["LONG-GAME FIT", "We look for work that can strengthen an athlete's career and a brand's credibility at the same time."],
 ];
 
 export default function AboutPage() {
@@ -23,32 +22,31 @@ export default function AboutPage() {
       <section className="about-hero">
         <div>
           <p className="eyebrow">About Prime Champs</p>
-          <h1>Built between the arena and the boardroom.</h1>
+          <h1>Founder-led. Built for the work between.</h1>
         </div>
         <p>
-          Prime Champs is an athlete partnership and marketing agency. We help
-          athletes and brands turn competitive credibility into well-structured
-          commercial relationships.
+          Prime Champs is an athlete partnership and marketing agency built for
+          direct, hands-on work from first fit through campaign follow-through.
         </p>
       </section>
 
       <section className="about-story section-pad">
         <div className="about-story-image">
-          <img src="/media/fight-bag.jpg" alt="Combat athlete training on a heavy bag" width="1260" height="1572" fetchPriority="high" />
+          <img src="/media/fight-bag.webp" alt="Combat athlete training on a heavy bag" width="1260" height="1572" fetchPriority="high" />
         </div>
         <div className="about-story-copy">
-          <p className="eyebrow dark">Our role</p>
-          <h2>Make the opportunity clearer on both sides.</h2>
+          <p className="eyebrow dark">Why Prime Champs exists</p>
+          <h2>Keep opportunity close to the people doing the work.</h2>
           <p>
-            Athletes need more than access. They need positioning, negotiation,
-            and a partner who understands that every deal sits inside a larger
-            career. Brands need more than a talent list. They need credible fit,
-            commercial alignment, and follow-through.
+            Athletes need more than an introduction. They need a partner who
+            understands that every commercial decision sits inside a larger
+            career. Brands need more than a list. They need a reasoned match and
+            someone accountable for what happens after the first call.
           </p>
           <p>
-            Prime Champs supports the work that connects the two: positioning,
-            introductions, deal development, campaign execution, and
-            follow-through.
+            Prime Champs is founder-led and intentionally hands-on. The same
+            operating context follows the work through positioning, introductions,
+            deal development, campaign execution, and the decision about what comes next.
           </p>
           <p className="company-note">
             Prime Champs is the registered trade name of VisionWave Agency LLC,
@@ -57,19 +55,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="principle-section section-pad dark-section">
+      <section className="principle-section direct-model-section section-pad dark-section">
         <div className="section-heading split-heading light-heading">
           <div>
-            <p className="eyebrow">Operating principles</p>
-            <h2>What we optimize for.</h2>
+            <p className="eyebrow">How the work stays accountable</p>
+            <h2>Direct by design.</h2>
           </div>
           <p>
-            A legitimate partnership creates value without asking either side
-            to pretend. These are the filters we bring to the work.
+            Prime Champs is built for judgment, communication, and follow-through—not
+            the appearance of a giant roster.
           </p>
         </div>
-        <div className="principle-grid">
-          {principles.map(([title, copy], index) => (
+        <div className="principle-grid three-principles">
+          {operatingModel.map(([title, copy], index) => (
             <article key={title}>
               <span>0{index + 1}</span><h3>{title}</h3><p>{copy}</p>
             </article>
@@ -77,21 +75,27 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="network-section section-pad">
+      <section className="network-section compact-network-section section-pad">
         <div className="network-copy">
           <p className="eyebrow dark">Across sports and categories</p>
-          <h2>Different sports. Shared intensity.</h2>
+          <h2>Different sports. One standard for readiness.</h2>
           <p>
-            Our focus spans combat sports, motorsports, surfing,
-            athletics, volleyball, hockey, ball sports, and action sports. We
-            stay open to any athlete whose credibility, community, and ambition
-            create a real commercial story.
+            Our focus spans combat sports, motorsports, surfing, athletics,
+            volleyball, hockey, ball sports, and action sports. The common thread
+            is competitive credibility, a real community, and readiness to work.
           </p>
+          <div className="sports-tags about-sports-tags" aria-label="Sports Prime Champs works across">
+            <span>Combat</span><span>Motorsports</span><span>Surf</span>
+            <span>Athletics</span><span>Volleyball</span><span>Hockey</span>
+            <span>Ball sports</span><span>Action sports</span>
+          </div>
         </div>
-        <div className="network-images">
-          <img src="/media/surf-carve-clean.jpg" alt="Surfer driving through a powerful turn" width="1002" height="1570" loading="lazy" decoding="async" />
-          <img src="/media/fight-ring.jpg" alt="Combat athlete landing a kick in competition" width="1260" height="1279" loading="lazy" decoding="async" />
-          <img src="/media/tennis-campaign.jpg" alt="Tennis ball with Prime Champs campaign branding" width="825" height="1024" loading="lazy" decoding="async" />
+        <div className="about-standard-card" aria-label="Prime Champs operating standard">
+          <span>THE STANDARD</span>
+          <strong>Credible in sport.</strong>
+          <strong>Ready in business.</strong>
+          <strong>Clear on the work.</strong>
+          <p>That is the room we are building.</p>
         </div>
       </section>
 

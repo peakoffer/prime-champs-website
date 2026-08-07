@@ -42,6 +42,18 @@ export default function PrivacyPage() {
         </section>
 
         <section>
+          <h2>Website activity and attribution</h2>
+          <p>
+            We use limited first-party activity data to understand which pages,
+            calls to action, and inquiry paths are working. This can include the
+            page visited, referring page, campaign parameters, a temporary
+            session identifier stored in your browser, and basic request data
+            used to protect the forms from abuse. We do not use this information
+            to sell personal profiles or run third-party advertising trackers.
+          </p>
+        </section>
+
+        <section>
           <h2>Service providers</h2>
           <p>
             Our inquiry workflow uses Supabase for application processing and
